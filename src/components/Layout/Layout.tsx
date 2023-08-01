@@ -1,8 +1,8 @@
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { format } from "date-fns";
-import { AddCircleOutlined, SubjectOutlined} from "@mui/icons-material";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { format } from 'date-fns';
+import { AddCircleOutlined, SubjectOutlined } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
     AppBar,
@@ -15,33 +15,36 @@ import {
     ListItemText,
     Toolbar,
     Typography,
-    } from "@mui/material";
-import { ActiveListItem, Page, StyledDate } from "./styled";
+} from '@mui/material';
+import { ActiveListItem, Page, StyledDate } from './styled';
 
 const drawerWidth = 240;
 
-function Layout(props) {
-    const {window, children} = props;
+interface LayoutProps {
+    window?: () => Window;
+    children: React.ReactNode;
+}
+
+const Layout: React.FC<LayoutProps> = ({ window, children }) => {
     const [mobileOpen, setMobileOpen] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
-    const navigate = useNavigate();
-    const location = useLocation();
-
     const menuItems = [
         {
             text: 'My Notes',
-            icon: <SubjectOutlined/>,
-            path: '/'
+            icon: <SubjectOutlined />,
+            path: '/',
         },
         {
             text: 'Create Note',
-            icon: <AddCircleOutlined/>,
-            path: '/create'
-        }
+            icon: <AddCircleOutlined />,
+            path: '/create',
+        },
     ];
 
     const handleListItemClick = () => {
@@ -53,13 +56,11 @@ function Layout(props) {
     const drawer = (
         <div>
             <Toolbar>
-                <Typography variant="h5">
-                    Notes
-                </Typography>
+                <Typography variant="h5">Notes</Typography>
             </Toolbar>
 
             <List>
-                {menuItems.map(item => (
+                {menuItems.map((item) => (
                     <ActiveListItem
                         button
                         key={item.text}
@@ -80,13 +81,13 @@ function Layout(props) {
     const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
-        <Box sx={{display: 'flex'}}>
+        <Box sx={{ display: 'flex' }}>
             <AppBar
                 elevation={0}
                 position="fixed"
                 sx={{
-                    width: {sm: `calc(100% - ${drawerWidth}px)`},
-                    ml: {sm: `${drawerWidth}px`},
+                    width: { sm: `calc(100% - ${drawerWidth}px)` },
+                    ml: { sm: `${drawerWidth}px` },
                 }}
             >
                 <Toolbar>
@@ -95,28 +96,22 @@ function Layout(props) {
                         aria-label="open drawer"
                         edge="start"
                         onClick={handleDrawerToggle}
-                        sx={{mr: 2, display: {sm: 'none'}}}
+                        sx={{ mr: 2, display: { sm: 'none' } }}
                     >
-                        <MenuIcon/>
+                        <MenuIcon />
                     </IconButton>
 
-                    <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-around',}}>
-                        <StyledDate variant="body2" sx={{ mr: 2} }>
+                    <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
+                        <StyledDate variant="body2" sx={{ mr: 2 }}>
                             Today is the {format(new Date(), `do MMMM Y`)}
                         </StyledDate>
-                        <Typography variant="h6">
-                            Grzegorz
-                        </Typography>
+                        <Typography variant="h6">Grzegorz</Typography>
                         <Avatar src="/icon.png" sx={{ ml: 2 }} />
                     </Box>
                 </Toolbar>
             </AppBar>
 
-            <Box
-                component="nav"
-                sx={{width: {sm: drawerWidth}, flexShrink: {sm: 0}}}
-                aria-label="mailbox folders"
-            >
+            <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
                 <Drawer
                     container={container}
                     variant="temporary"
@@ -126,8 +121,8 @@ function Layout(props) {
                         keepMounted: true, // Better open performance on mobile.
                     }}
                     sx={{
-                        display: {xs: 'block', sm: 'none'},
-                        '& .MuiDrawer-paper': {boxSizing: 'border-box', width: drawerWidth},
+                        display: { xs: 'block', sm: 'none' },
+                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
                     }}
                 >
                     {drawer}
@@ -135,28 +130,25 @@ function Layout(props) {
                 <Drawer
                     variant="permanent"
                     sx={{
-                        display: {xs: 'none', sm: 'block'},
-                        '& .MuiDrawer-paper': {boxSizing: 'border-box', width: drawerWidth},
+                        display: { xs: 'none', sm: 'block' },
+                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
                     }}
                     open
                 >
                     {drawer}
                 </Drawer>
             </Box>
-            <Page
-                component="main"
-                sx={{flexGrow: 1, p: 3, width: {sm: `calc(100% - ${drawerWidth}px)`}}}
-            >
-                <Toolbar/>
+            <Page component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
+                <Toolbar />
                 {children}
             </Page>
         </Box>
     );
-}
+};
 
 Layout.propTypes = {
     window: PropTypes.func,
-    children: PropTypes.node,
+    children: PropTypes.node.isRequired,
 };
 
 export default Layout;
