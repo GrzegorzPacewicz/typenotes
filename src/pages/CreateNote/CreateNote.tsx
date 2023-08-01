@@ -1,19 +1,26 @@
-import  { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { nanoid } from "nanoid";
+import { nanoid } from 'nanoid';
 import { Button, Container, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { StyledFormControl, StyledTextField } from './styled';
 
-const CreateNote = () => {
-    const [title, setTitle] = useState('');
-    const [details, setDetails] = useState('');
-    const [titleError, setTitleError] = useState(false);
-    const [detailsError, setDetailsError] = useState(false);
-    const [category, setCategory] = useState('todos');
+interface Note {
+    id: string;
+    title: string;
+    details: string;
+    category: string;
+}
+
+const CreateNote: React.FC = () => {
+    const [title, setTitle] = useState<string>('');
+    const [details, setDetails] = useState<string>('');
+    const [titleError, setTitleError] = useState<boolean>(false);
+    const [detailsError, setDetailsError] = useState<boolean>(false);
+    const [category, setCategory] = useState<string>('todos');
     const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setTitleError(false);
         setDetailsError(false);
@@ -27,15 +34,15 @@ const CreateNote = () => {
         }
 
         if (title.trim() && details.trim()) {
-            const newNote = {
+            const newNote: Note = {
                 id: nanoid(),
                 title: title.trim(),
                 details: details.trim(),
                 category,
             };
 
-            const existingNotes = JSON.parse(localStorage.getItem('notes')) || [];
-            const updatedNotes = [...existingNotes, newNote];
+            const existingNotes: Note[] = JSON.parse(localStorage.getItem('notes') || '[]');
+            const updatedNotes: Note[] = [...existingNotes, newNote];
             localStorage.setItem('notes', JSON.stringify(updatedNotes));
 
             setTitle('');
@@ -50,15 +57,15 @@ const CreateNote = () => {
                 Create a New Note
                 {titleError || detailsError ? (
                     <Typography variant="body2" color="error">
-                        {titleError && "Please enter a title. "}
-                        {detailsError && "Please enter details."}
+                        {titleError && 'Please enter a title. '}
+                        {detailsError && 'Please enter details.'}
                     </Typography>
                 ) : null}
             </Typography>
 
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                 <StyledTextField
-                    onChange={(event) => setTitle(event.target.value)}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => setTitle(event.target.value)}
                     value={title}
                     variant="outlined"
                     label="Note Title"
@@ -68,8 +75,9 @@ const CreateNote = () => {
                     error={titleError}
                 />
 
+
                 <StyledTextField
-                    onChange={(event) => setDetails(event.target.value)}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => setDetails(event.target.value)}
                     value={details}
                     variant="outlined"
                     label="Details"
@@ -83,7 +91,7 @@ const CreateNote = () => {
 
                 <StyledFormControl>
                     <FormLabel>Note Category</FormLabel>
-                    <RadioGroup value={category} onChange={(event) => setCategory(event.target.value)} color="primary">
+                    <RadioGroup value={category} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCategory(event.target.value)} color="primary">
                         <FormControlLabel value="money" control={<Radio />} label="Money" />
                         <FormControlLabel value="todos" control={<Radio />} label="Todos" />
                         <FormControlLabel value="reminders" control={<Radio />} label="Reminders" />
