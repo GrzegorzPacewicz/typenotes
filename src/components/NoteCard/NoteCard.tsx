@@ -1,11 +1,23 @@
+import React from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from "react-router-dom";
-import { StyledAvatar, StyledCard } from "./styled.tsx";
-import { CardContent, CardHeader, IconButton, Typography } from "@mui/material";
-import { DeleteOutlined, EditOutlined } from "@mui/icons-material";
+import { useNavigate } from 'react-router-dom';
+import { StyledAvatar, StyledCard } from './styled';
+import { CardContent, CardHeader, IconButton, Typography } from '@mui/material';
+import { DeleteOutlined, EditOutlined } from '@mui/icons-material';
 
-const NoteCard = ({note, handleDelete}) => {
+interface Note {
+    id: string;
+    title: string;
+    category: string;
+    details: string;
+}
 
+interface NoteCardProps {
+    note: Note;
+    handleDelete: (id: string) => void;
+}
+
+const NoteCard: React.FC<NoteCardProps> = ({ note, handleDelete }) => {
     const navigate = useNavigate();
 
     return (
@@ -16,10 +28,10 @@ const NoteCard = ({note, handleDelete}) => {
                     action={
                         <>
                             <IconButton onClick={() => navigate(`/edit/${note.id}`)}>
-                                <EditOutlined/>
+                                <EditOutlined />
                             </IconButton>
                             <IconButton onClick={() => handleDelete(note.id)}>
-                                <DeleteOutlined/>
+                                <DeleteOutlined />
                             </IconButton>
                         </>
                     }
@@ -41,9 +53,9 @@ NoteCard.propTypes = {
         id: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
         category: PropTypes.string.isRequired,
-        details: PropTypes.string.isRequired
+        details: PropTypes.string.isRequired,
     }).isRequired,
-    handleDelete: PropTypes.func.isRequired
+    handleDelete: PropTypes.func.isRequired,
 };
 
 export default NoteCard;
