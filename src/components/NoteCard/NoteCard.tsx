@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useNavigate } from "react-router-dom";
-import { StyledAvatar, StyledCard } from "./styled.jsx";
+import { StyledAvatar, StyledCard } from "./styled.tsx";
 import { CardContent, CardHeader, IconButton, Typography } from "@mui/material";
 import { DeleteOutlined, EditOutlined } from "@mui/icons-material";
 

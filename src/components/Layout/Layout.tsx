@@ -18,7 +18,6 @@ import {
     } from "@mui/material";
 import { ActiveListItem, Page, StyledDate } from "./styled";
 
-
 const drawerWidth = 240;
 
 function Layout(props) {
