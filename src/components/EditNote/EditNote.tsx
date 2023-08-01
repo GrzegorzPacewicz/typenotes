@@ -1,28 +1,44 @@
-import { useCallback, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Box, Button, Container, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
+import React, { useCallback, useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import {
+    Box,
+    Button,
+    Container,
+    FormControlLabel,
+    FormLabel,
+    Radio,
+    RadioGroup,
+    Typography,
+} from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import { StyledFormControl, StyledTextField } from "../../pages/CreateNote/styled";
+import { StyledFormControl, StyledTextField } from '../../pages/CreateNote/styled';
 
-const EditNote = () => {
-    const {id} = useParams();
-    const [note, setNote] = useState(null);
+interface Note {
+    id: string;
+    title: string;
+    details: string;
+    category: string;
+}
+
+const EditNote: React.FC = () => {
+    const { id } = useParams<{ id: string }>();
+    const [note, setNote] = useState<Note | null>(null);
     const navigate = useNavigate();
     const [titleError, setTitleError] = useState(false);
     const [detailsError, setDetailsError] = useState(false);
 
     const fetchNoteById = useCallback(() => {
         try {
-            const notes = JSON.parse(localStorage.getItem("notes")) || [];
+            const notes: Note[] = JSON.parse(localStorage.getItem('notes') || '[]');
             const foundNote = notes.find((note) => note.id === id);
             if (foundNote) {
                 setNote(foundNote);
             } else {
-                console.log("Note not found.");
+                console.log('Note not found.');
             }
         } catch (error) {
-            console.error("Error fetching note:", error);
+            console.error('Error fetching note:', error);
         }
     }, [id]);
 
@@ -34,52 +50,52 @@ const EditNote = () => {
         window.scrollTo(0, 0);
     }, []);
 
-    const handleChange = (event) => {
-        const {name, value} = event.target;
-        setNote({
-            ...note,
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+        setNote((prevNote) => ({
+            ...prevNote!,
             [name]: value,
-        });
+        }));
     };
 
-    const handleEdit = (event) => {
+    const handleEdit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setTitleError(false);
         setDetailsError(false);
 
-        if (note.title.trim() === '') {
+        if (!note?.title.trim()) {
             setTitleError(true);
         }
 
-        if (note.details.trim() === '') {
+        if (!note?.details.trim()) {
             setDetailsError(true);
         }
 
-        if (note.title.trim() && note.details.trim()) {
+        if (note?.title.trim() && note?.details.trim()) {
             try {
-                const notes = JSON.parse(localStorage.getItem("notes")) || [];
+                let notes: Note[] = JSON.parse(localStorage.getItem('notes') || '[]');
                 const noteIndex = notes.findIndex((note) => note.id === id);
                 if (noteIndex !== -1) {
                     notes[noteIndex] = note;
-                    localStorage.setItem("notes", JSON.stringify(notes));
-                    navigate("/");
+                    localStorage.setItem('notes', JSON.stringify(notes));
+                    navigate('/');
                 } else {
-                    console.log("Note not found.");
+                    console.log('Note not found.');
                 }
             } catch (error) {
-                console.error("Error updating note:", error);
+                console.error('Error updating note:', error);
             }
         }
     };
 
     const handleDelete = () => {
         try {
-            let notes = JSON.parse(localStorage.getItem("notes")) || [];
+            let notes: Note[] = JSON.parse(localStorage.getItem('notes') || '[]');
             notes = notes.filter((note) => note.id !== id);
-            localStorage.setItem("notes", JSON.stringify(notes));
-            navigate("/");
+            localStorage.setItem('notes', JSON.stringify(notes));
+            navigate('/');
         } catch (error) {
-            console.error("Error deleting note:", error);
+            console.error('Error deleting note:', error);
         }
     };
 
@@ -91,8 +107,8 @@ const EditNote = () => {
                         Edit the Note
                         {titleError || detailsError ? (
                             <Typography variant="body2" color="error">
-                                {titleError && "Please enter a title."}
-                                {detailsError && "Please enter details."}
+                                {titleError && 'Please enter a title.'}
+                                {detailsError && 'Please enter details.'}
                             </Typography>
                         ) : null}
                     </Typography>
@@ -130,19 +146,19 @@ const EditNote = () => {
                                 color="primary"
                                 name="category"
                             >
-                                <FormControlLabel value="money" control={<Radio/>} label="Money"/>
-                                <FormControlLabel value="todos" control={<Radio/>} label="Todos"/>
-                                <FormControlLabel value="reminders" control={<Radio/>} label="Reminders"/>
-                                <FormControlLabel value="work" control={<Radio/>} label="Work"/>
+                                <FormControlLabel value="money" control={<Radio />} label="Money" />
+                                <FormControlLabel value="todos" control={<Radio />} label="Todos" />
+                                <FormControlLabel value="reminders" control={<Radio />} label="Reminders" />
+                                <FormControlLabel value="work" control={<Radio />} label="Work" />
                             </RadioGroup>
                         </StyledFormControl>
 
-                        <Box sx={{display: 'flex', justifyContent: 'left', gap: "1rem"}}>
+                        <Box sx={{ display: 'flex', justifyContent: 'left', gap: '1rem' }}>
                             <Button
                                 type="submit"
                                 color="primary"
                                 variant="contained"
-                                endIcon={<KeyboardArrowRightIcon/>}
+                                endIcon={<KeyboardArrowRightIcon />}
                             >
                                 Submit
                             </Button>
@@ -150,12 +166,11 @@ const EditNote = () => {
                                 color="warning"
                                 variant="contained"
                                 onClick={handleDelete}
-                                endIcon={<DeleteOutlinedIcon/>}
+                                endIcon={<DeleteOutlinedIcon />}
                             >
                                 Delete
                             </Button>
                         </Box>
-
                     </form>
                 </Container>
             ) : (
