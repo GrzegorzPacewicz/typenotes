@@ -1,3 +1,4 @@
+import React from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import CreateNote from './pages/CreateNote/CreateNote';
 import Notes from './pages/Notes/Notes';
