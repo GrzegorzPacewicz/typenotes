@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {theme} from "../../theme";
 import {useLocation, useNavigate} from 'react-router-dom';
-import {AddCircleOutlined, SubjectOutlined} from '@mui/icons-material';
+import {AddCircleOutlined, LoginOutlined, SubjectOutlined} from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
 import {AppBar, Box, Drawer, IconButton, List, ListItemIcon, ListItemText, Toolbar, Typography,} from '@mui/material';
 import {ActiveListItem, Page} from './styled';
@@ -34,6 +34,11 @@ const Layout: React.FC<LayoutProps> = ({window, children}) => {
             text: 'Create Note',
             icon: <AddCircleOutlined/>,
             path: '/create',
+        },
+        {
+            text: 'Auth',
+            icon: <LoginOutlined/>,
+            path: '/auth',
         },
     ];
 
