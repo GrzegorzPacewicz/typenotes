@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { theme } from "../../theme";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import { AddCircleOutlined, SubjectOutlined } from '@mui/icons-material';
@@ -62,7 +63,7 @@ const Layout: React.FC<LayoutProps> = ({ window, children }) => {
             <List>
                 {menuItems.map((item) => (
                     <ActiveListItem
-                        button
+                        theme={theme}
                         key={item.text}
                         onClick={() => {
                             navigate(item.path);
