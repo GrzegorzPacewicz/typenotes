@@ -2,7 +2,7 @@ import {ListItem, styled, Typography} from "@mui/material";
 import {grey} from "@mui/material/colors";
 
 interface ActiveListItemProps {
-    selected?: boolean; // Add the selected prop here
+    selected?: boolean;
 }
 
 export const ActiveListItem = styled(ListItem)<ActiveListItemProps>((props) => ({
@@ -13,8 +13,8 @@ export const ActiveListItem = styled(ListItem)<ActiveListItemProps>((props) => (
         cursor: 'pointer',
     },
     backgroundColor: props.selected
-        ? props.theme.palette.action.selected // Add the background color for selected state
-        : 'transparent', // Set the default background color when not selected
+        ? props.theme.palette.action.selected
+        : "transparent",
 }));
 
 export const Page = styled("div")(({theme}) => ({

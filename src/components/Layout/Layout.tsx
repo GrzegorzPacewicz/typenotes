@@ -11,15 +11,20 @@ import {
     Box,
     Drawer,
     IconButton,
+    Menu,
+    MenuItem,
     List,
     ListItemIcon,
     ListItemText,
     Toolbar,
+    Tooltip,
     Typography,
 } from '@mui/material';
+import icon from "../../../public/icon.png"
 import { ActiveListItem, Page, StyledDate } from './styled';
 
 const drawerWidth = 240;
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 interface LayoutProps {
     window?: () => Window;
@@ -30,6 +35,15 @@ const Layout: React.FC<LayoutProps> = ({ window, children }) => {
     const [mobileOpen, setMobileOpen] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
+
+    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
+    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElUser(event.currentTarget);
+    };
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -106,8 +120,37 @@ const Layout: React.FC<LayoutProps> = ({ window, children }) => {
                         <StyledDate variant="body2" sx={{ mr: 2 }}>
                             Today is the {format(new Date(), `do MMMM Y`)}
                         </StyledDate>
-                        <Typography variant="h6">Grzegorz</Typography>
-                        <Avatar src="/icon.png" sx={{ ml: 2 }} />
+
+                        <Box sx={{ flexGrow: 0 }}>
+                            <Tooltip title="Open settings">
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                    <Avatar alt="Grzegorz" src="../../../public/icon.png" />
+                                </IconButton>
+                            </Tooltip>
+                            <Menu
+                                sx={{ mt: '45px' }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
+                            >
+                                {settings.map((setting) => (
+                                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                                        <Typography textAlign="center">{setting}</Typography>
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                        </Box>
+
                     </Box>
                 </Toolbar>
             </AppBar>
