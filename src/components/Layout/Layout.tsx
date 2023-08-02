@@ -20,7 +20,6 @@ import {
     Tooltip,
     Typography,
 } from '@mui/material';
-import icon from "../../../public/icon.png"
 import { ActiveListItem, Page, StyledDate } from './styled';
 
 const drawerWidth = 240;
