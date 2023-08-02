@@ -139,7 +139,7 @@ const Layout: React.FC<LayoutProps> = ({ window, children }) => {
                     {drawer}
                 </Drawer>
             </Box>
-            <Page component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
+            <Page sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
                 <Toolbar />
                 {children}
             </Page>

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { StyledAvatar, StyledCard } from './styled';
 import { CardContent, CardHeader, IconButton, Typography } from '@mui/material';
 import { DeleteOutlined, EditOutlined } from '@mui/icons-material';
+import {theme} from "../../theme";
 
 interface Note {
     id: string;
@@ -22,9 +23,9 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, handleDelete }) => {
 
     return (
         <div>
-            <StyledCard elevation={1} note={note}>
+            <StyledCard elevation={1} note={note} theme={theme}>
                 <CardHeader
-                    avatar={<StyledAvatar note={note}>{note.category[0].toUpperCase()}</StyledAvatar>}
+                    avatar={<StyledAvatar note={note} theme={theme}>{note.category[0].toUpperCase()}</StyledAvatar>}
                     action={
                         <>
                             <IconButton onClick={() => navigate(`/edit/${note.id}`)}>

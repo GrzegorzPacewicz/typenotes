@@ -7,18 +7,17 @@ interface Note {
 
 interface StyledCardProps {
     note: Note;
-    theme: Theme;
-}
+    }
 
-export const StyledCard = styled(Card)<StyledCardProps>(({ theme, note }) => ({
+export const StyledCard = styled(Card)<StyledCardProps & { theme: Theme }>((props) => ({
     border:
-        note.category === 'work'
-            ? `1px solid ${theme.palette.primary.main}`
-            : note.category === 'reminders'
+        props.note.category === 'work'
+            ? `1px solid ${props.theme.palette.primary.main}`
+            : props.note.category === 'reminders'
                 ? `1px solid ${red[500]}`
-                : note.category === 'money'
+                : props.note.category === 'money'
                     ? `1px solid ${green[500]}`
-                    : note.category === 'todos'
+                    : props.note.category === 'todos'
                         ? `1px solid ${yellow[600]}`
                         : 'none',
     transition: 'transform 0.5s ease',
@@ -29,18 +28,18 @@ export const StyledCard = styled(Card)<StyledCardProps>(({ theme, note }) => ({
 
 interface StyledAvatarProps {
     note: Note;
-    theme: Theme;
-}
+    }
 
-export const StyledAvatar = styled(Avatar)<StyledAvatarProps>(({ theme, note }) => ({
+export const StyledAvatar = styled(Avatar)<StyledAvatarProps & { theme: Theme }>((props) => ({
     backgroundColor:
-        note.category === 'work'
-            ? `${theme.palette.primary.main}`
-            : note.category === 'reminders'
+        props.note.category === 'work'
+            ? `${props.theme.palette.primary.main}`
+            : props.note.category === 'reminders'
                 ? red[600]
-                : note.category === 'money'
+                : props.note.category === 'money'
                     ? green[500]
-                    : note.category === 'todos'
+                    : props.note.category === 'todos'
                         ? yellow[600]
                         : 'none',
 }));
+
