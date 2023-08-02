@@ -1,63 +1,38 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import { theme } from "../../theme";
-import { useLocation, useNavigate } from 'react-router-dom';
-import { format } from 'date-fns';
-import { AddCircleOutlined, SubjectOutlined } from '@mui/icons-material';
+import {theme} from "../../theme";
+import {useLocation, useNavigate} from 'react-router-dom';
+import {AddCircleOutlined, SubjectOutlined} from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
-import {
-    AppBar,
-    Avatar,
-    Box,
-    Drawer,
-    IconButton,
-    Menu,
-    MenuItem,
-    List,
-    ListItemIcon,
-    ListItemText,
-    Toolbar,
-    Tooltip,
-    Typography,
-} from '@mui/material';
-import icon from "../../../public/icon.png"
-import { ActiveListItem, Page, StyledDate } from './styled';
+import {AppBar, Box, Drawer, IconButton, List, ListItemIcon, ListItemText, Toolbar, Typography,} from '@mui/material';
+import {ActiveListItem, Page} from './styled';
+import Header from "./Header";
 
 const drawerWidth = 240;
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 interface LayoutProps {
     window?: () => Window;
     children: React.ReactNode;
 }
 
-const Layout: React.FC<LayoutProps> = ({ window, children }) => {
+const Layout: React.FC<LayoutProps> = ({window, children}) => {
     const [mobileOpen, setMobileOpen] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
-
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElUser(event.currentTarget);
-    };
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
-    const menuItems = [
+     const menuItems = [
         {
             text: 'My Notes',
-            icon: <SubjectOutlined />,
+            icon: <SubjectOutlined/>,
             path: '/',
         },
         {
             text: 'Create Note',
-            icon: <AddCircleOutlined />,
+            icon: <AddCircleOutlined/>,
             path: '/create',
         },
     ];
@@ -86,7 +61,7 @@ const Layout: React.FC<LayoutProps> = ({ window, children }) => {
                         selected={location.pathname === item.path}
                     >
                         <ListItemIcon>{item.icon}</ListItemIcon>
-                        <ListItemText secondary={item.text} />
+                        <ListItemText secondary={item.text}/>
                     </ActiveListItem>
                 ))}
             </List>
@@ -96,13 +71,13 @@ const Layout: React.FC<LayoutProps> = ({ window, children }) => {
     const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{display: 'flex'}}>
             <AppBar
                 elevation={0}
                 position="fixed"
                 sx={{
-                    width: { sm: `calc(100% - ${drawerWidth}px)` },
-                    ml: { sm: `${drawerWidth}px` },
+                    width: {sm: `calc(100% - ${drawerWidth}px)`},
+                    ml: {sm: `${drawerWidth}px`},
                 }}
             >
                 <Toolbar>
@@ -111,51 +86,17 @@ const Layout: React.FC<LayoutProps> = ({ window, children }) => {
                         aria-label="open drawer"
                         edge="start"
                         onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { sm: 'none' } }}
+                        sx={{mr: 2, display: {sm: 'none'}}}
                     >
-                        <MenuIcon />
+                        <MenuIcon/>
                     </IconButton>
 
-                    <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
-                        <StyledDate variant="body2" sx={{ mr: 2 }}>
-                            Today is the {format(new Date(), `do MMMM Y`)}
-                        </StyledDate>
+                    <Header/>
 
-                        <Box sx={{ flexGrow: 0 }}>
-                            <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="Grzegorz" src="/icon.png" />
-                                </IconButton>
-                            </Tooltip>
-                            <Menu
-                                sx={{ mt: '45px' }}
-                                id="menu-appbar"
-                                anchorEl={anchorElUser}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
-                            >
-                                {settings.map((setting) => (
-                                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center">{setting}</Typography>
-                                    </MenuItem>
-                                ))}
-                            </Menu>
-                        </Box>
-
-                    </Box>
                 </Toolbar>
             </AppBar>
 
-            <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
+            <Box component="nav" sx={{width: {sm: drawerWidth}, flexShrink: {sm: 0}}} aria-label="mailbox folders">
                 <Drawer
                     container={container}
                     variant="temporary"
@@ -165,8 +106,8 @@ const Layout: React.FC<LayoutProps> = ({ window, children }) => {
                         keepMounted: true, // Better open performance on mobile.
                     }}
                     sx={{
-                        display: { xs: 'block', sm: 'none' },
-                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                        display: {xs: 'block', sm: 'none'},
+                        '& .MuiDrawer-paper': {boxSizing: 'border-box', width: drawerWidth},
                     }}
                 >
                     {drawer}
@@ -174,18 +115,20 @@ const Layout: React.FC<LayoutProps> = ({ window, children }) => {
                 <Drawer
                     variant="permanent"
                     sx={{
-                        display: { xs: 'none', sm: 'block' },
-                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                        display: {xs: 'none', sm: 'block'},
+                        '& .MuiDrawer-paper': {boxSizing: 'border-box', width: drawerWidth},
                     }}
                     open
                 >
                     {drawer}
                 </Drawer>
             </Box>
-            <Page sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
-                <Toolbar />
+
+            <Page sx={{flexGrow: 1, p: 3, width: {sm: `calc(100% - ${drawerWidth}px)`}}}>
+                <Toolbar/>
                 {children}
             </Page>
+
         </Box>
     );
 };
