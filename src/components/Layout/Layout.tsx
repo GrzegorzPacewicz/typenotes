@@ -20,6 +20,7 @@ import {
     Tooltip,
     Typography,
 } from '@mui/material';
+import icon from "../../../public/icon.png"
 import { ActiveListItem, Page, StyledDate } from './styled';
 
 const drawerWidth = 240;
@@ -123,7 +124,7 @@ const Layout: React.FC<LayoutProps> = ({ window, children }) => {
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="Grzegorz" src="../../../public/icon.png" />
+                                    <Avatar alt="Grzegorz" src="/icon.png" />
                                 </IconButton>
                             </Tooltip>
                             <Menu
