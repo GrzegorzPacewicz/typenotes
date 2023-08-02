@@ -19,6 +19,7 @@ interface NoteCardProps {
 }
 
 const NoteCard: React.FC<NoteCardProps> = ({ note, handleDelete }) => {
+
     const navigate = useNavigate();
 
     return (
