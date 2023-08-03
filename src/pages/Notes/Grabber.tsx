@@ -38,7 +38,7 @@ const Grabber: React.FC = () => {
     };
 
     return (
-        <Container sx={{ marginTop: '20px' }}>
+
             <Masonry spacing={3} columns={{ xs: 1, md: 2, lg: 3 }}>
                 {notesList.map((note) => (
                     <div key={note.id}>
@@ -46,7 +46,7 @@ const Grabber: React.FC = () => {
                     </div>
                 ))}
             </Masonry>
-        </Container>
+
     );
 };
 

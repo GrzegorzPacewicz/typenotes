@@ -39,9 +39,7 @@ const Notes: React.FC = () => {
                     </div>
                 ))}
             </Masonry>
-
             <Grabber/>
-
         </Container>
     );
 };
