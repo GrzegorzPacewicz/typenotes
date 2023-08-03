@@ -3,16 +3,23 @@ import {Box, IconButton, Menu, MenuItem, Tooltip, Typography} from "@mui/materia
 import {StyledDate} from "./styled";
 import {format} from "date-fns";
 import {AccountCircle} from "@mui/icons-material";
+import {useNavigate} from "react-router-dom";
 
 const Header = () => {
 
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const navigate = useNavigate();
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const handleLoginClick = () => {
+        handleCloseUserMenu();
+        navigate('/auth'); // Navigate to the '/auth' path when "Login" is clicked
     };
 
     return (
@@ -46,7 +53,7 @@ const Header = () => {
                     onClose={handleCloseUserMenu}
                 >
 
-                    <MenuItem onClick={handleCloseUserMenu}> <Typography>Login</Typography></MenuItem>
+                    <MenuItem onClick={handleLoginClick}> <Typography>Login</Typography></MenuItem>
                     <MenuItem onClick={handleCloseUserMenu}> <Typography>Logut</Typography></MenuItem>
 
                 </Menu>
