@@ -13,13 +13,7 @@ import {
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { StyledFormControl, StyledTextField } from '../../pages/CreateNote/styled';
-
-interface Note {
-    id: string;
-    title: string;
-    details: string;
-    category: string;
-}
+import { Note } from '../../types/types';
 
 const EditNote: React.FC = () => {
     const { id } = useParams<{ id: string }>();

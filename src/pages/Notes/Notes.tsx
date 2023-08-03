@@ -3,13 +3,7 @@ import {Container} from '@mui/material';
 import NoteCard from '../../components/NoteCard/NoteCard';
 import Masonry from '@mui/lab/Masonry';
 import Grabber from "./Grabber";
-
-interface Note {
-    id: string;
-    title: string;
-    category: string;
-    details: string;
-}
+import { Note } from '../../types/types';
 
 const Notes: React.FC = () => {
     const [notes, setNotes] = useState<Note[]>([]);

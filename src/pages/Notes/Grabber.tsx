@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Container } from "@mui/material";
 import { collection, getDocs, QuerySnapshot } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import NoteCard from "../../components/NoteCard/NoteCard";
 import Masonry from "@mui/lab/Masonry";
-
-interface Note {
-    id: string;
-    title: string;
-    category: string;
-    details: string;
-}
+import { Note } from '../../types/types';
 
 const Grabber: React.FC = () => {
     const [notesList, setNotesList] = useState<Note[]>([]);
