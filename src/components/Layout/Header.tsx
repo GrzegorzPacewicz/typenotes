@@ -4,6 +4,8 @@ import {StyledDate} from "./styled";
 import {format} from "date-fns";
 import {AccountCircle} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
+import {signOut} from "firebase/auth";
+import {auth} from "../../config/firebase";
 
 const Header = () => {
 
@@ -20,6 +22,15 @@ const Header = () => {
     const handleLoginClick = () => {
         handleCloseUserMenu();
         navigate('/auth'); // Navigate to the '/auth' path when "Login" is clicked
+    };
+
+    const signout = async () => {
+        handleCloseUserMenu();
+        try {
+            await signOut(auth);
+        } catch (err) {
+            console.error(err)
+        }
     };
 
     return (
@@ -54,7 +65,7 @@ const Header = () => {
                 >
 
                     <MenuItem onClick={handleLoginClick}> <Typography>Login</Typography></MenuItem>
-                    <MenuItem onClick={handleCloseUserMenu}> <Typography>Logut</Typography></MenuItem>
+                    <MenuItem onClick={signout}> <Typography>Logout</Typography></MenuItem>
 
                 </Menu>
             </Box>
