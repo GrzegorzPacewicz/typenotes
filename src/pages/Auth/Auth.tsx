@@ -51,14 +51,11 @@ const Auth: React.FC = () => {
             </Box>
             <Box display="flex" gap={2} justifyContent="center" mt={10}>
                 <Button onClick={signInWithGoogle}>Sign In With Google</Button>
-            </Box>
-            <Box display="flex" gap={2} justifyContent="center" mt={10}>
                 <Button onClick={logout}>Logout</Button>
             </Box>
         </Container>
 
-    )
-        ;
+    );
 };
 
 export default Auth;
