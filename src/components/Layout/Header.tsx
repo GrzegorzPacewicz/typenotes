@@ -4,8 +4,8 @@ import {StyledDate} from "./styled";
 import {format} from "date-fns";
 import {AccountCircle} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
-import {signOut} from "firebase/auth";
-import {auth} from "../../config/firebase";
+import {signInWithPopup, signOut} from "firebase/auth";
+import {auth, GoogleProvider} from "../../config/firebase";
 
 const Header = () => {
 
@@ -24,7 +24,16 @@ const Header = () => {
         navigate('/auth'); // Navigate to the '/auth' path when "Login" is clicked
     };
 
-    const signout = async () => {
+    const loginWithGoogle = async () => {
+        handleCloseUserMenu();
+        try {
+            await signInWithPopup(auth, GoogleProvider);
+        } catch (err) {
+            console.error(err)
+        }
+    };
+
+    const logoutFromAccount = async () => {
         handleCloseUserMenu();
         try {
             await signOut(auth);
@@ -64,8 +73,8 @@ const Header = () => {
                     onClose={handleCloseUserMenu}
                 >
 
-                    <MenuItem onClick={handleLoginClick}> <Typography>Login</Typography></MenuItem>
-                    <MenuItem onClick={signout}> <Typography>Logout</Typography></MenuItem>
+                    <MenuItem onClick={loginWithGoogle}> <Typography>Login with Google</Typography></MenuItem>
+                    <MenuItem onClick={logoutFromAccount}> <Typography>Logout</Typography></MenuItem>
 
                 </Menu>
             </Box>

@@ -25,6 +25,7 @@ const Auth: React.FC = () => {
             console.error(err)
         }
     };
+
     const logout = async () => {
         try {
             await signOut(auth);
