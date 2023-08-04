@@ -3,7 +3,8 @@ import {Container} from '@mui/material';
 import NoteCard from '../../components/NoteCard/NoteCard';
 import Masonry from '@mui/lab/Masonry';
 import Grabber from "./Grabber";
-import { Note } from '../../types/types';
+import {Note} from '../../types/types';
+import SubmitNote from "../CreateNote/SubmitNote";
 
 const Notes: React.FC = () => {
     const [notes, setNotes] = useState<Note[]>([]);
@@ -34,6 +35,8 @@ const Notes: React.FC = () => {
                 ))}
             </Masonry>
             <Grabber/>
+            <SubmitNote/>
+
         </Container>
     );
 };
