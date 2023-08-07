@@ -1,10 +1,10 @@
 import React from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
-import CreateNote from './pages/CreateNote/CreateNote';
-import Notes from './pages/Notes/Notes';
-import Layout from './components/Layout/Layout';
-import EditNote from './components/EditNote/EditNote';
-import Auth from "./pages/Auth/Auth";
+import CreateNote from './pages/CreateNote';
+import Notes from './pages/Notes';
+import Layout from './components/Layout';
+import EditNote from './components/EditNote';
+import Auth from "./pages/Auth";
 
 const App: React.FC = () => {
     return (

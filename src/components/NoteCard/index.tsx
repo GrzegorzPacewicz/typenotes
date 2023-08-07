@@ -5,7 +5,7 @@ import { StyledAvatar, StyledCard } from './styled';
 import { CardContent, CardHeader, IconButton, Typography } from '@mui/material';
 import { DeleteOutlined, EditOutlined } from '@mui/icons-material';
 import {theme} from "../../theme";
-import { Note } from '../../types/types';
+import { Note } from '../../types';
 
 interface NoteCardProps {
     note: Note;

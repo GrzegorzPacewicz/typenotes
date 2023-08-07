@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import { Button, Container, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { StyledFormControl, StyledTextField } from './styled';
-import { Note } from '../../types/types';
+import { Note } from '../../types';
 
 const CreateNote: React.FC = () => {
     const [title, setTitle] = useState<string>('');

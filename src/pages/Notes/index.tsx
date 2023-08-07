@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Container} from '@mui/material';
-import NoteCard from '../../components/NoteCard/NoteCard';
+import NoteCard from '../../components/NoteCard';
 import Masonry from '@mui/lab/Masonry';
 import Grabber from "./Grabber";
-import {Note} from '../../types/types';
+import {Note} from '../../types';
 import SubmitNote from "../CreateNote/SubmitNote";
 
 const Notes: React.FC = () => {
