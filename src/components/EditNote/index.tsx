@@ -13,7 +13,9 @@ import {
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { StyledFormControl, StyledTextField } from '../../pages/CreateNote/styled';
-import { Note } from '../../types';
+import { CategoryType, Note } from '../../types';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../../config/firebase';
 
 const EditNote: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -22,75 +24,81 @@ const EditNote: React.FC = () => {
     const [titleError, setTitleError] = useState(false);
     const [detailsError, setDetailsError] = useState(false);
 
-    const fetchNoteById = useCallback(() => {
-        try {
-            const notes: Note[] = JSON.parse(localStorage.getItem('notes') || '[]');
-            const foundNote = notes.find((note) => note.id === id);
-            if (foundNote) {
-                setNote(foundNote);
-            } else {
-                console.log('Note not found.');
-            }
-        } catch (error) {
-            console.error('Error fetching note:', error);
-        }
-    }, [id]);
-
     useEffect(() => {
+        const fetchNoteById = async () => {
+            try {
+                const noteDocRef = doc(db, 'Notes', id);
+                const noteSnapshot = await getDoc(noteDocRef);
+                if (noteSnapshot.exists()) {
+                    const noteData = noteSnapshot.data();
+                    setNote({
+                        id: noteSnapshot.id,
+                        title: noteData.title || '',
+                        category: noteData.category as CategoryType || 'todos',
+                        details: noteData.details || '',
+                    });
+                } else {
+                    console.log('Note not found.');
+                }
+            } catch (error) {
+                console.error('Error fetching note:', error);
+            }
+        };
+
         fetchNoteById();
-    }, [fetchNoteById]);
+    }, [id]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-        setNote((prevNote) => ({
-            ...prevNote!,
-            [name]: value,
-        }));
+        // const { name, value } = event.target;
+        // setNote((prevNote) => ({
+        //     ...prevNote!,
+        //     [name]: value,
+        // }));
     };
 
     const handleEdit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        setTitleError(false);
-        setDetailsError(false);
-
-        if (!note?.title.trim()) {
-            setTitleError(true);
-        }
-
-        if (!note?.details.trim()) {
-            setDetailsError(true);
-        }
-
-        if (note?.title.trim() && note?.details.trim()) {
-            try {
-                let notes: Note[] = JSON.parse(localStorage.getItem('notes') || '[]');
-                const noteIndex = notes.findIndex((note) => note.id === id);
-                if (noteIndex !== -1) {
-                    notes[noteIndex] = note;
-                    localStorage.setItem('notes', JSON.stringify(notes));
-                    navigate('/');
-                } else {
-                    console.log('Note not found.');
-                }
-            } catch (error) {
-                console.error('Error updating note:', error);
-            }
-        }
+        // event.preventDefault();
+        // setTitleError(false);
+        // setDetailsError(false);
+        //
+        // if (!note?.title.trim()) {
+        //     setTitleError(true);
+        // }
+        //
+        // if (!note?.details.trim()) {
+        //     setDetailsError(true);
+        // }
+        //
+        // if (note?.title.trim() && note?.details.trim()) {
+        //     try {
+        //         let notes: Note[] = JSON.parse(localStorage.getItem('notes') || '[]');
+        //         const noteIndex = notes.findIndex((note) => note.id === id);
+        //         if (noteIndex !== -1) {
+        //             notes[noteIndex] = note;
+        //             localStorage.setItem('notes', JSON.stringify(notes));
+        //             navigate('/');
+        //         } else {
+        //             console.log('Note not found.');
+        //         }
+        //     } catch (error) {
+        //         console.error('Error updating note:', error);
+        //     }
+        // }
     };
 
     const handleDelete = () => {
-        try {
-            let notes: Note[] = JSON.parse(localStorage.getItem('notes') || '[]');
-            notes = notes.filter((note) => note.id !== id);
-            localStorage.setItem('notes', JSON.stringify(notes));
-            navigate('/');
-        } catch (error) {
-            console.error('Error deleting note:', error);
-        }
+        // try {
+        //     let notes: Note[] = JSON.parse(localStorage.getItem('notes') || '[]');
+        //     notes = notes.filter((note) => note.id !== id);
+        //     localStorage.setItem('notes', JSON.stringify(notes));
+        //     navigate('/');
+        // } catch (error) {
+        //     console.error('Error deleting note:', error);
+        // }
     };
 
     return (

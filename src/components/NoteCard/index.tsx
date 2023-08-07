@@ -5,7 +5,7 @@ import { StyledAvatar, StyledCard } from './styled';
 import { CardContent, CardHeader, IconButton, Typography } from '@mui/material';
 import { DeleteOutlined, EditOutlined } from '@mui/icons-material';
 import {theme} from "../../theme";
-import { Note } from '../../types';
+import { Note, CategoryType } from '../../types';
 
 interface NoteCardProps {
     note: Note;
@@ -48,7 +48,7 @@ NoteCard.propTypes = {
     note: PropTypes.shape({
         id: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
-        category: PropTypes.string.isRequired,
+        category: PropTypes.oneOf<CategoryType>(["money", "todos", "reminders", "work"]),
         details: PropTypes.string.isRequired,
     }).isRequired,
     handleDelete: PropTypes.func.isRequired,

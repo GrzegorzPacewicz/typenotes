@@ -1,8 +1,9 @@
 import { Avatar, Card, styled, Theme } from '@mui/material';
 import { green, red, yellow } from '@mui/material/colors';
+import { CategoryType } from "../../types";
 
 interface Note {
-    category: string;
+    category: CategoryType;
 }
 
 interface StyledCardProps {
