@@ -1,6 +1,8 @@
+export type CategoryType = "money" | "todos" | "reminders" | "work";
+
 export interface Note {
     id?: string;
     title: string;
-    category?: "money" | "todos" | "reminders" | "work";
+    category?: CategoryType;
     details: string;
 }

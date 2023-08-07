@@ -5,6 +5,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import {StyledFormControl, StyledTextField} from './styled';
 import {addDoc, collection} from "firebase/firestore";
 import {db} from "../../config/firebase";
+import { CategoryType } from '../../types';
 
 const SubmitNote: React.FC = () => {
 
@@ -12,7 +13,7 @@ const SubmitNote: React.FC = () => {
 
     const [title, setTitle] = useState<string>('');
     const [details, setDetails] = useState<string>('');
-    const [category, setCategory] = useState<"money" | "todos" | "reminders" | "work">('todos'); // Set the default value here
+    const [category, setCategory] = useState<CategoryType>('todos'); // Set the default value here
 
     const [titleError, setTitleError] = useState<boolean>(false);
     const [detailsError, setDetailsError] = useState<boolean>(false);
