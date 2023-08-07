@@ -11,7 +11,7 @@ const CreateNote: React.FC = () => {
     const [details, setDetails] = useState<string>('');
     const [titleError, setTitleError] = useState<boolean>(false);
     const [detailsError, setDetailsError] = useState<boolean>(false);
-    const [category, setCategory] = useState<string>('todos');
+    const [category, setCategory] = useState<"money" | "todos" | "reminders" | "work">('todos');
     const navigate = useNavigate();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -85,7 +85,7 @@ const CreateNote: React.FC = () => {
 
                 <StyledFormControl>
                     <FormLabel>Note Category</FormLabel>
-                    <RadioGroup value={category} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCategory(event.target.value)} color="primary">
+                    <RadioGroup value={category} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCategory(event.target.value as "money" | "todos" | "reminders" | "work")} color="primary">
                         <FormControlLabel value="money" control={<Radio />} label="Money" />
                         <FormControlLabel value="todos" control={<Radio />} label="Todos" />
                         <FormControlLabel value="reminders" control={<Radio />} label="Reminders" />
