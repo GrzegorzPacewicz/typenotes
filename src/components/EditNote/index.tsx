@@ -53,11 +53,11 @@ const EditNote: React.FC = () => {
     }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // const { name, value } = event.target;
-        // setNote((prevNote) => ({
-        //     ...prevNote!,
-        //     [name]: value,
-        // }));
+        const { name, value } = event.target;
+        setNote((prevNote) => ({
+            ...prevNote!,
+            [name]: value,
+        }));
     };
 
     const handleEdit = (event: React.FormEvent<HTMLFormElement>) => {
