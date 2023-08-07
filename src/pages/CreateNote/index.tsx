@@ -1,60 +1,44 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { nanoid } from 'nanoid';
-import { Button, Container, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
+import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {Button, FormControlLabel, FormLabel, Radio, RadioGroup, Typography} from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { StyledFormControl, StyledTextField } from './styled';
-import { Note } from '../../types';
+import {StyledFormControl, StyledTextField} from './styled';
+import {addDoc, collection} from "firebase/firestore";
+import {db} from "../../config/firebase";
 
-const CreateNote: React.FC = () => {
+const SubmitNote: React.FC = () => {
+
+    const notesCollectionRef = collection(db, "Notes");
+
     const [title, setTitle] = useState<string>('');
     const [details, setDetails] = useState<string>('');
+    const [category, setCategory] = useState<"money" | "todos" | "reminders" | "work">('todos'); // Set the default value here
+
     const [titleError, setTitleError] = useState<boolean>(false);
     const [detailsError, setDetailsError] = useState<boolean>(false);
-    const [category, setCategory] = useState<"money" | "todos" | "reminders" | "work">('todos');
+
     const navigate = useNavigate();
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setTitleError(false);
-        setDetailsError(false);
-
-        if (title.trim() === '') {
-            setTitleError(true);
+        try {
+            await addDoc(notesCollectionRef, {
+                title: title,
+                details: details,
+                category: category,
+            });
+        } catch (err) {
+            console.error(err)
         }
-
-        if (details.trim() === '') {
-            setDetailsError(true);
-        }
-
-        if (title.trim() && details.trim()) {
-            const newNote: Note = {
-                id: nanoid(),
-                title: title.trim(),
-                details: details.trim(),
-                category,
-            };
-
-            const existingNotes: Note[] = JSON.parse(localStorage.getItem('notes') || '[]');
-            const updatedNotes: Note[] = [...existingNotes, newNote];
-            localStorage.setItem('notes', JSON.stringify(updatedNotes));
-
-            setTitle('');
-            setDetails('');
-            navigate('/');
-        }
+        setTitle('');
+        setDetails('');
+        navigate('/');
     };
 
     return (
-        <Container>
+        <>
             <Typography variant="h6" component="h2" color="textSecondary" gutterBottom>
-                Create a New Note
-                {titleError || detailsError ? (
-                    <Typography variant="body2" color="error">
-                        {titleError && 'Please enter a title. '}
-                        {detailsError && 'Please enter details.'}
-                    </Typography>
-                ) : null}
+                Submit a New Note
             </Typography>
 
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>
@@ -85,20 +69,24 @@ const CreateNote: React.FC = () => {
 
                 <StyledFormControl>
                     <FormLabel>Note Category</FormLabel>
-                    <RadioGroup value={category} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCategory(event.target.value as "money" | "todos" | "reminders" | "work")} color="primary">
-                        <FormControlLabel value="money" control={<Radio />} label="Money" />
-                        <FormControlLabel value="todos" control={<Radio />} label="Todos" />
-                        <FormControlLabel value="reminders" control={<Radio />} label="Reminders" />
-                        <FormControlLabel value="work" control={<Radio />} label="Work" />
+                    <RadioGroup
+                        value={category}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCategory(event.target.value as "money" | "todos" | "reminders" | "work")}
+                        color="primary"
+                    >
+                        <FormControlLabel value="money" control={<Radio/>} label="Money"/>
+                        <FormControlLabel value="todos" control={<Radio/>} label="Todos"/>
+                        <FormControlLabel value="reminders" control={<Radio/>} label="Reminders"/>
+                        <FormControlLabel value="work" control={<Radio/>} label="Work"/>
                     </RadioGroup>
                 </StyledFormControl>
 
-                <Button type="submit" color="primary" variant="contained" endIcon={<KeyboardArrowRightIcon />}>
+                <Button type="submit" color="primary" variant="contained" endIcon={<KeyboardArrowRightIcon/>}>
                     Submit
                 </Button>
             </form>
-        </Container>
+        </>
     );
 };
 
-export default CreateNote;
+export default SubmitNote;

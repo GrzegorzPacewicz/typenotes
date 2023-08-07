@@ -4,7 +4,7 @@ import NoteCard from '../../components/NoteCard';
 import Masonry from '@mui/lab/Masonry';
 import Grabber from "./Grabber";
 import {Note} from '../../types';
-import SubmitNote from "../CreateNote/SubmitNote";
+import SubmitNote from "../CreateNote";
 
 const Notes: React.FC = () => {
     const [notes, setNotes] = useState<Note[]>([]);
@@ -35,8 +35,6 @@ const Notes: React.FC = () => {
                 ))}
             </Masonry>
             <Grabber/>
-            <SubmitNote/>
-
         </Container>
     );
 };

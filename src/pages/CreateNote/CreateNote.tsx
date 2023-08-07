@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { nanoid } from 'nanoid';
-import { Button, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
+import { Button, Container, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { StyledFormControl, StyledTextField } from './styled';
 import { Note } from '../../types';
 
-const SubmitNote: React.FC = () => {
+const CreateNote: React.FC = () => {
     const [title, setTitle] = useState<string>('');
     const [details, setDetails] = useState<string>('');
     const [titleError, setTitleError] = useState<boolean>(false);
     const [detailsError, setDetailsError] = useState<boolean>(false);
-    const [category, setCategory] = useState<"money" | "todos" | "reminders" | "work">('todos'); // Set the default value here
+    const [category, setCategory] = useState<"money" | "todos" | "reminders" | "work">('todos');
     const navigate = useNavigate();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -46,9 +46,9 @@ const SubmitNote: React.FC = () => {
     };
 
     return (
-        <>
+        <Container>
             <Typography variant="h6" component="h2" color="textSecondary" gutterBottom>
-                Submit a New Note
+                Create a New Note
                 {titleError || detailsError ? (
                     <Typography variant="body2" color="error">
                         {titleError && 'Please enter a title. '}
@@ -97,8 +97,8 @@ const SubmitNote: React.FC = () => {
                     Submit
                 </Button>
             </form>
-        </>
+        </Container>
     );
 };
 
-export default SubmitNote;
+export default CreateNote;
