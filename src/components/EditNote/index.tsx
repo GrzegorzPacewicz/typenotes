@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
     Box,
@@ -14,7 +14,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { StyledFormControl, StyledTextField } from '../../pages/CreateNote/styled';
 import { CategoryType, Note } from '../../types';
-import { doc, getDoc } from 'firebase/firestore';
+import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 
 const EditNote: React.FC = () => {
@@ -27,7 +27,7 @@ const EditNote: React.FC = () => {
     useEffect(() => {
         const fetchNoteById = async () => {
             try {
-                const noteDocRef = doc(db, 'Notes', id);
+                const noteDocRef = doc(db, "Notes", id);
                 const noteSnapshot = await getDoc(noteDocRef);
                 if (noteSnapshot.exists()) {
                     const noteData = noteSnapshot.data();
@@ -60,45 +60,43 @@ const EditNote: React.FC = () => {
         }));
     };
 
-    const handleEdit = (event: React.FormEvent<HTMLFormElement>) => {
-        // event.preventDefault();
-        // setTitleError(false);
-        // setDetailsError(false);
-        //
-        // if (!note?.title.trim()) {
-        //     setTitleError(true);
-        // }
-        //
-        // if (!note?.details.trim()) {
-        //     setDetailsError(true);
-        // }
-        //
-        // if (note?.title.trim() && note?.details.trim()) {
-        //     try {
-        //         let notes: Note[] = JSON.parse(localStorage.getItem('notes') || '[]');
-        //         const noteIndex = notes.findIndex((note) => note.id === id);
-        //         if (noteIndex !== -1) {
-        //             notes[noteIndex] = note;
-        //             localStorage.setItem('notes', JSON.stringify(notes));
-        //             navigate('/');
-        //         } else {
-        //             console.log('Note not found.');
-        //         }
-        //     } catch (error) {
-        //         console.error('Error updating note:', error);
-        //     }
-        // }
+    const handleEdit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        setTitleError(false);
+        setDetailsError(false);
+
+        if (!note?.title?.trim()) {
+            setTitleError(true);
+        }
+
+        if (!note?.details?.trim()) {
+            setDetailsError(true);
+        }
+
+        if (note?.title?.trim() && note?.details?.trim()) {
+            try {
+                const noteDocRef = doc(db, "Notes", id);
+                await updateDoc(noteDocRef, {
+                    title: note.title,
+                    category: note.category,
+                    details: note.details,
+                });
+
+                navigate("/");
+            } catch (error) {
+                console.error("Error updating note:", error);
+            }
+        }
     };
 
-    const handleDelete = () => {
-        // try {
-        //     let notes: Note[] = JSON.parse(localStorage.getItem('notes') || '[]');
-        //     notes = notes.filter((note) => note.id !== id);
-        //     localStorage.setItem('notes', JSON.stringify(notes));
-        //     navigate('/');
-        // } catch (error) {
-        //     console.error('Error deleting note:', error);
-        // }
+    const handleDelete = async () => {
+        try {
+            const noteDocRef = doc(db, "Notes", id);
+            await deleteDoc(noteDocRef);
+            navigate("/");
+        } catch (error) {
+            console.error('Error deleting note:', error);
+        }
     };
 
     return (
