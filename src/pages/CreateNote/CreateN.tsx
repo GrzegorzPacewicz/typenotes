@@ -6,7 +6,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { StyledFormControl, StyledTextField } from './styled';
 import { Note } from '../../types';
 
-const CreateNote: React.FC = () => {
+const CreateN: React.FC = () => {
     const [title, setTitle] = useState<string>('');
     const [details, setDetails] = useState<string>('');
     const [titleError, setTitleError] = useState<boolean>(false);
@@ -101,4 +101,4 @@ const CreateNote: React.FC = () => {
     );
 };
 
-export default CreateNote;
+export default CreateN;

@@ -7,7 +7,7 @@ import {addDoc, collection} from "firebase/firestore";
 import {db} from "../../config/firebase";
 import { CategoryType } from '../../types';
 
-const SubmitNote: React.FC = () => {
+const CreateNote: React.FC = () => {
 
     const notesCollectionRef = collection(db, "Notes");
 
@@ -39,7 +39,7 @@ const SubmitNote: React.FC = () => {
     return (
         <>
             <Typography variant="h6" component="h2" color="textSecondary" gutterBottom>
-                Submit a New Note
+                Create a New Note
             </Typography>
 
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>
@@ -90,4 +90,4 @@ const SubmitNote: React.FC = () => {
     );
 };
 
-export default SubmitNote;
+export default CreateNote;

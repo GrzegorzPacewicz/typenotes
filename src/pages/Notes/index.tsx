@@ -1,40 +1,51 @@
 import React, {useEffect, useState} from 'react';
-import {Container} from '@mui/material';
-import NoteCard from '../../components/NoteCard';
-import Masonry from '@mui/lab/Masonry';
-import Grabber from "./Grabber";
+import {collection, deleteDoc, doc, getDocs, QuerySnapshot} from "firebase/firestore";
+import {db} from "../../config/firebase";
+import NoteCard from "../../components/NoteCard";
+import Masonry from "@mui/lab/Masonry";
 import {Note} from '../../types';
-import SubmitNote from "../CreateNote";
+import {Container} from "@mui/material";
 
 const Notes: React.FC = () => {
-    const [notes, setNotes] = useState<Note[]>([]);
+    const [notesList, setNotesList] = useState<Note[]>([]);
+    const notesCollectionRef = collection(db, "Notes");
+
+    const getNotesList = async () => {
+        try {
+            const data: QuerySnapshot = await getDocs(notesCollectionRef);
+            const filteredData: Note[] = data.docs.map((doc) => ({
+                ...doc.data(),
+                id: doc.id,
+            }));
+            setNotesList(filteredData);
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     useEffect(() => {
-        const storedNotes: Note[] = JSON.parse(localStorage.getItem('notes') || '[]');
-        setNotes(storedNotes);
+        getNotesList();
     }, []);
+
+    const deleteNote = async (id): void => {
+        const noteDoc = doc(db, "Notes", id);
+        await deleteDoc(noteDoc);
+        getNotesList();
+    };
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
-    const handleDelete = (id: string) => {
-        const newNotes = notes.filter((note) => note.id !== id);
-        setNotes(newNotes);
-        localStorage.setItem('notes', JSON.stringify(newNotes));
-    };
-
-
     return (
         <Container sx={{marginTop: '20px'}}>
             <Masonry spacing={3} columns={{xs: 1, md: 2, lg: 3}}>
-                {notes.map((note) => (
+                {notesList.map((note) => (
                     <div key={note.id}>
-                        <NoteCard note={note} handleDelete={handleDelete}/>
+                        <NoteCard note={note} handleDelete={deleteNote}/>
                     </div>
                 ))}
             </Masonry>
-            <Grabber/>
         </Container>
     );
 };
