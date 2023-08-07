@@ -27,10 +27,10 @@ const Notes: React.FC = () => {
         getNotesList();
     }, []);
 
-    const deleteNote = async (id): void => {
+    const deleteNote = async (id: string): Promise<void> => {
         const noteDoc = doc(db, "Notes", id);
         await deleteDoc(noteDoc);
-        getNotesList();
+        await getNotesList();
     };
 
     useEffect(() => {
