@@ -1,6 +1,6 @@
 export interface Note {
     id: string;
     title: string;
-    category: "money" | "todos" | "reminders" | "work";
+    category: string;
     details: string;
 }

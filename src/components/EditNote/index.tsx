@@ -168,7 +168,7 @@ const EditNote: React.FC = () => {
                     </form>
                 </Container>
             ) : (
-                <p>Loading...</p>
+                <Typography>Loading...</Typography>
             )}
         </>
     );
