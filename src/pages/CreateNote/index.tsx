@@ -22,24 +22,48 @@ const CreateNote: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setTitleError(!title.trim());
+        setDetailsError(!details.trim());
+
+        if (!title.trim()) {
+            setTitleError(true);
+            return;
+        }
+
+        if (!details.trim()) {
+            setDetailsError(true);
+            return;
+        }
+
         try {
             await addDoc(notesCollectionRef, {
                 title: title,
                 details: details,
                 category: category,
             });
+
+            setTitle('');
+            setDetails('');
+            setCategory('todos');
+            setTitleError(false);
+            setDetailsError(false);
+
+            navigate('/');
         } catch (err) {
-            console.error(err)
+            console.error(err);
         }
-        setTitle('');
-        setDetails('');
-        navigate('/');
     };
 
     return (
         <>
             <Typography variant="h6" component="h2" color="textSecondary" gutterBottom>
                 Create a New Note
+                {(titleError || detailsError) && (
+                    <Typography variant="body2" color="error">
+                        {titleError && 'Please enter a title. '}
+                        {detailsError && 'Please enter details.'}
+                    </Typography>
+                )}
             </Typography>
 
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>
