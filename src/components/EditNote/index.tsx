@@ -25,7 +25,7 @@ const EditNote: React.FC = () => {
     const [detailsError, setDetailsError] = useState(false);
 
     useEffect(() => {
-        const fetchNoteById = async () => {
+        const fetchNoteById = async (id: string) => {
             try {
                 const noteDocRef = doc(db, "Notes", id);
                 const noteSnapshot = await getDoc(noteDocRef);
@@ -44,8 +44,7 @@ const EditNote: React.FC = () => {
                 console.error('Error fetching note:', error);
             }
         };
-
-        fetchNoteById();
+        if (id) {fetchNoteById(id)}
     }, [id]);
 
     useEffect(() => {
@@ -73,16 +72,17 @@ const EditNote: React.FC = () => {
             setDetailsError(true);
         }
 
-        if (note?.title?.trim() && note?.details?.trim()) {
+        if (!titleError && !detailsError) {
             try {
-                const noteDocRef = doc(db, "Notes", id);
-                await updateDoc(noteDocRef, {
-                    title: note.title,
-                    category: note.category,
-                    details: note.details,
-                });
-
-                navigate("/");
+               if (note?.id) {
+                   const noteDocRef = doc(db, "Notes", note.id);
+                   await updateDoc(noteDocRef, {
+                       title: note?.title,
+                       category: note?.category,
+                       details: note?.details,
+                   });
+                   navigate("/");
+               }
             } catch (error) {
                 console.error("Error updating note:", error);
             }
@@ -91,9 +91,11 @@ const EditNote: React.FC = () => {
 
     const handleDelete = async () => {
         try {
-            const noteDocRef = doc(db, "Notes", id);
-            await deleteDoc(noteDocRef);
-            navigate("/");
+            if (note?.id) {
+                const noteDocRef = doc(db, "Notes", note.id);
+                await deleteDoc(noteDocRef);
+                navigate("/");
+            }
         } catch (error) {
             console.error('Error deleting note:', error);
         }
