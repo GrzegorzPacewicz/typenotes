@@ -42,7 +42,7 @@ const Notes: React.FC = () => {
             <Masonry spacing={3} columns={{xs: 1, md: 2, lg: 3}}>
                 {notesList.map((note) => (
                     <div key={note.id}>
-                        <NoteCard note={note} handleDelete={deleteNote}/>
+                        <NoteCard noteProp={note} handleDelete={deleteNote}/>
                     </div>
                 ))}
             </Masonry>
