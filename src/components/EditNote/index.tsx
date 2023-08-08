@@ -64,28 +64,33 @@ const EditNote: React.FC = () => {
         setTitleError(false);
         setDetailsError(false);
 
-        if (!note?.title?.trim()) {
+        const trimmedTitle = note?.title?.trim();
+        const trimmedDetails = note?.details?.trim();
+
+        if (!trimmedTitle) {
             setTitleError(true);
         }
 
-        if (!note?.details?.trim()) {
+        if (!trimmedDetails) {
             setDetailsError(true);
         }
 
-        if (!titleError && !detailsError) {
-            try {
-               if (note?.id) {
-                   const noteDocRef = doc(db, "Notes", note.id);
-                   await updateDoc(noteDocRef, {
-                       title: note?.title,
-                       category: note?.category,
-                       details: note?.details,
-                   });
-                   navigate("/");
-               }
-            } catch (error) {
-                console.error("Error updating note:", error);
+        if (!trimmedTitle || !trimmedDetails) {
+            return;
+        }
+
+        try {
+            if (note?.id) {
+                const noteDocRef = doc(db, "Notes", note.id);
+                await updateDoc(noteDocRef, {
+                    title: note?.title,
+                    category: note?.category,
+                    details: note?.details,
+                });
+                navigate("/");
             }
+        } catch (error) {
+            console.error("Error updating note:", error);
         }
     };
 
@@ -107,12 +112,12 @@ const EditNote: React.FC = () => {
                 <Container>
                     <Typography variant="h6" component="h2" color="textSecondary" gutterBottom>
                         Edit the Note
-                        {titleError || detailsError ? (
+                        {(titleError || detailsError) && (
                             <Typography variant="body2" color="error">
-                                {titleError && 'Please enter a title.'}
+                                {titleError && 'Please enter a title. '}
                                 {detailsError && 'Please enter details.'}
                             </Typography>
-                        ) : null}
+                        )}
                     </Typography>
 
                     <form noValidate autoComplete="off" onSubmit={handleEdit}>
@@ -161,6 +166,7 @@ const EditNote: React.FC = () => {
                                 color="primary"
                                 variant="contained"
                                 endIcon={<KeyboardArrowRightIcon />}
+
                             >
                                 Submit
                             </Button>
