@@ -14,7 +14,6 @@ const CreateNote: React.FC = () => {
     const [title, setTitle] = useState<string>('');
     const [details, setDetails] = useState<string>('');
     const [category, setCategory] = useState<CategoryType>('todos'); // Set the default value here
-
     const [titleError, setTitleError] = useState<boolean>(false);
     const [detailsError, setDetailsError] = useState<boolean>(false);
 

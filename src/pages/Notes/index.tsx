@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { collection, deleteDoc, doc, getDocs, QuerySnapshot } from "firebase/firestore";
-import { db } from "../../config/firebase";
+import React, {useEffect, useState} from 'react';
+import {collection, deleteDoc, doc, getDocs, QuerySnapshot} from "firebase/firestore";
+import {db} from "../../config/firebase";
 import NoteCard from "../../components/NoteCard";
 import Masonry from "@mui/lab/Masonry";
-import { Note } from '../../types';
-import { Container } from "@mui/material";
+import {Note} from '../../types';
+import {Container} from "@mui/material";
 
 const Notes: React.FC = () => {
     const [notesList, setNotesList] = useState<Note[]>([]);
@@ -14,8 +14,8 @@ const Notes: React.FC = () => {
         try {
             const data: QuerySnapshot = await getDocs(notesCollectionRef);
             const filteredData: Note[] = data.docs.map((doc) => ({
-                ...doc.data(),
                 id: doc.id,
+                ...doc.data() as Note,
             }));
             setNotesList(filteredData);
         } catch (err) {
