@@ -11,21 +11,22 @@ interface NoteCardProps {
     handleDelete: (id: string) => void;
 }
 
-const NoteCard: React.FC<NoteCardProps> = ({ noteProp, handleDelete }) => {
+const NoteCard: React.FC<NoteCardProps> = ({noteProp, handleDelete}) => {
     const navigate = useNavigate();
 
     return (
         <div>
             <StyledCard elevation={1} note={noteProp} theme={theme}>
                 <CardHeader
-                    avatar={<StyledAvatar note={noteProp} theme={theme}>{noteProp.category[0].toUpperCase()}</StyledAvatar>}
+                    avatar={<StyledAvatar note={noteProp}
+                                          theme={theme}>{noteProp.category[0].toUpperCase()}</StyledAvatar>}
                     action={
                         <>
                             <IconButton onClick={() => navigate(`/edit/${noteProp.id}`)}>
-                                <EditOutlined />
+                                <EditOutlined/>
                             </IconButton>
                             <IconButton onClick={() => handleDelete(noteProp.id)}>
-                                <DeleteOutlined />
+                                <DeleteOutlined/>
                             </IconButton>
                         </>
                     }

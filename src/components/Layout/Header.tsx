@@ -1,11 +1,11 @@
 import React from 'react';
-import {Box, IconButton, Menu, MenuItem, Tooltip, Typography} from "@mui/material";
-import {StyledDate} from "./styled";
-import {format} from "date-fns";
-import {AccountCircle} from "@mui/icons-material";
-import {useNavigate} from "react-router-dom";
-import {signInWithPopup, signOut} from "firebase/auth";
-import {auth, GoogleProvider} from "../../config/firebase";
+import { Box, IconButton, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
+import { StyledDate } from "./styled";
+import { format } from "date-fns";
+import { AccountCircle } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import { signInWithPopup, signOut } from "firebase/auth";
+import { auth, GoogleProvider } from "../../config/firebase";
 
 const Header = () => {
 

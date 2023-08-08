@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import {theme} from "../../theme";
-import {useLocation, useNavigate} from 'react-router-dom';
-import {AddCircleOutlined, LoginOutlined, SubjectOutlined} from '@mui/icons-material';
+import React, { useState } from 'react';
+import { theme } from "../../theme";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { AddCircleOutlined, LoginOutlined, SubjectOutlined } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
-import {AppBar, Box, Drawer, IconButton, List, ListItemIcon, ListItemText, Toolbar, Typography,} from '@mui/material';
-import {ActiveListItem, Page} from './styled';
+import { AppBar, Box, Drawer, IconButton, List, ListItemIcon, ListItemText, Toolbar, Typography, } from '@mui/material';
+import { ActiveListItem, Page } from './styled';
 import Header from "./Header";
 
 const drawerWidth = 240;

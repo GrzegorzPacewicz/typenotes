@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {Button, FormControlLabel, FormLabel, Radio, RadioGroup, Typography} from '@mui/material';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import {StyledFormControl, StyledTextField} from './styled';
-import {addDoc, collection} from "firebase/firestore";
-import {db} from "../../config/firebase";
+import { StyledFormControl, StyledTextField } from './styled';
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../config/firebase";
 import { CategoryType } from '../../types';
 
 const CreateNote: React.FC = () => {
@@ -96,13 +96,17 @@ const CreateNote: React.FC = () => {
                     <FormLabel>Note Category</FormLabel>
                     <RadioGroup
                         value={category}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCategory(event.target.value as "money" | "todos" | "reminders" | "work")}
+                        onChange={(event) => setCategory(event.target.value as "money" | "todos" | "reminders" | "work")}
                         color="primary"
                     >
-                        <FormControlLabel value="money" control={<Radio/>} label="Money"/>
-                        <FormControlLabel value="todos" control={<Radio/>} label="Todos"/>
-                        <FormControlLabel value="reminders" control={<Radio/>} label="Reminders"/>
-                        <FormControlLabel value="work" control={<Radio/>} label="Work"/>
+                        {["money", "todos", "reminders", "work"].map((option) => (
+                            <FormControlLabel
+                                key={option}
+                                value={option}
+                                control={<Radio />}
+                                label={option.charAt(0).toUpperCase() + option.slice(1)}
+                            />
+                        ))}
                     </RadioGroup>
                 </StyledFormControl>
 

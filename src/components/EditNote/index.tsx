@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import {
-    Box,
-    Button,
-    Container,
-    FormControlLabel,
-    FormLabel,
-    Radio,
-    RadioGroup,
-    Typography,
-} from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Box, Button, Container, FormControlLabel, FormLabel, Radio, RadioGroup, Typography, } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { StyledFormControl, StyledTextField } from '../../pages/CreateNote/styled';
@@ -18,7 +9,7 @@ import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 
 const EditNote: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
+    const {id} = useParams<{ id: string }>();
     const [note, setNote] = useState<Note | null>(null);
     const navigate = useNavigate();
     const [titleError, setTitleError] = useState(false);
@@ -44,7 +35,9 @@ const EditNote: React.FC = () => {
                 console.error('Error fetching note:', error);
             }
         };
-        if (id) {fetchNoteById(id)}
+        if (id) {
+            fetchNoteById(id)
+        }
     }, [id]);
 
     useEffect(() => {
@@ -52,7 +45,7 @@ const EditNote: React.FC = () => {
     }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
         setNote((prevNote) => ({
             ...prevNote!,
             [name]: value,
@@ -153,19 +146,19 @@ const EditNote: React.FC = () => {
                                 color="primary"
                                 name="category"
                             >
-                                <FormControlLabel value="money" control={<Radio />} label="Money" />
-                                <FormControlLabel value="todos" control={<Radio />} label="Todos" />
-                                <FormControlLabel value="reminders" control={<Radio />} label="Reminders" />
-                                <FormControlLabel value="work" control={<Radio />} label="Work" />
+                                <FormControlLabel value="money" control={<Radio/>} label="Money"/>
+                                <FormControlLabel value="todos" control={<Radio/>} label="Todos"/>
+                                <FormControlLabel value="reminders" control={<Radio/>} label="Reminders"/>
+                                <FormControlLabel value="work" control={<Radio/>} label="Work"/>
                             </RadioGroup>
                         </StyledFormControl>
 
-                        <Box sx={{ display: 'flex', justifyContent: 'left', gap: '1rem' }}>
+                        <Box sx={{display: 'flex', justifyContent: 'left', gap: '1rem'}}>
                             <Button
                                 type="submit"
                                 color="primary"
                                 variant="contained"
-                                endIcon={<KeyboardArrowRightIcon />}
+                                endIcon={<KeyboardArrowRightIcon/>}
 
                             >
                                 Submit
@@ -174,7 +167,7 @@ const EditNote: React.FC = () => {
                                 color="warning"
                                 variant="contained"
                                 onClick={handleDelete}
-                                endIcon={<DeleteOutlinedIcon />}
+                                endIcon={<DeleteOutlinedIcon/>}
                             >
                                 Delete
                             </Button>

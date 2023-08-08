@@ -1,4 +1,4 @@
-import { Avatar, Card, styled, Theme } from '@mui/material';
+import { Avatar, Card, styled } from '@mui/material';
 import { green, red, yellow } from '@mui/material/colors';
 import { CategoryType } from "../../types";
 
@@ -8,9 +8,9 @@ interface Note {
 
 interface StyledCardProps {
     note: Note;
-    }
+}
 
-export const StyledCard = styled(Card)<StyledCardProps>(({ theme, note }) => ({
+export const StyledCard = styled(Card)<StyledCardProps>(({theme, note}) => ({
     border:
         note.category === 'work'
             ? `1px solid ${theme.palette.primary.main}`
@@ -29,9 +29,9 @@ export const StyledCard = styled(Card)<StyledCardProps>(({ theme, note }) => ({
 
 interface StyledAvatarProps {
     note: Note;
-    }
+}
 
-export const StyledAvatar = styled(Avatar)<StyledAvatarProps>(({ theme, note }) => ({
+export const StyledAvatar = styled(Avatar)<StyledAvatarProps>(({theme, note}) => ({
     backgroundColor:
         note.category === 'work'
             ? `${theme.palette.primary.main}`

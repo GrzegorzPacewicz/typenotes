@@ -1,5 +1,5 @@
-import {ListItem, styled, Typography} from "@mui/material";
-import {grey} from "@mui/material/colors";
+import { ListItem, styled, Typography } from "@mui/material";
+import { grey } from "@mui/material/colors";
 
 interface ActiveListItemProps {
     selected?: boolean;

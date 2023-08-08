@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {Box, Button, Container, Input} from "@mui/material";
-import {createUserWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth"
-import {auth, GoogleProvider} from "../../config/firebase"
+import React, { useState } from 'react';
+import { Box, Button, Container, Input } from "@mui/material";
+import { createUserWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth"
+import { auth, GoogleProvider } from "../../config/firebase"
 
 const Auth: React.FC = () => {
 

@@ -11,11 +11,11 @@ const App: React.FC = () => {
         <HashRouter>
             <Layout>
                 <Routes>
-                    <Route path="/" element={<Notes />} />
-                    <Route path="/create" element={<CreateNote/>} />
-                    <Route path="/edit/:id" element={<EditNote />} />
-                    <Route path="/auth" element={<Auth />} />
-                    <Route path="*" element={<Notes />} />
+                    <Route path="/" element={<Notes/>}/>
+                    <Route path="/create" element={<CreateNote/>}/>
+                    <Route path="/edit/:id" element={<EditNote/>}/>
+                    <Route path="/auth" element={<Auth/>}/>
+                    <Route path="*" element={<Notes/>}/>
                 </Routes>
             </Layout>
         </HashRouter>
