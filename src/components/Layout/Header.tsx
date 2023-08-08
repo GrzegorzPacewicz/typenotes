@@ -19,11 +19,6 @@ const Header = () => {
         setAnchorElUser(null);
     };
 
-    const handleLoginClick = () => {
-        handleCloseUserMenu();
-        navigate('/auth'); // Navigate to the '/auth' path when "Login" is clicked
-    };
-
     const loginWithGoogle = async () => {
         handleCloseUserMenu();
         try {
