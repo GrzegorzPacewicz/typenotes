@@ -6,7 +6,7 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { StyledFormControl, StyledTextField } from '../../pages/CreateNote/styled';
 import { CategoryType, Note } from '../../types';
 import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
-import { db } from '../../config/firebase';
+import { auth, db } from '../../config/firebase';
 
 const EditNote: React.FC = () => {
     const {id} = useParams<{ id: string }>();
@@ -79,6 +79,7 @@ const EditNote: React.FC = () => {
                     title: note?.title,
                     category: note?.category,
                     details: note?.details,
+                    userId: auth?.currentUser?.uid,
                 });
                 navigate("/");
             }

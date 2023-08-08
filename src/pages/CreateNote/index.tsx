@@ -4,7 +4,7 @@ import { Button, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } fr
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { StyledFormControl, StyledTextField } from './styled';
 import { addDoc, collection } from "firebase/firestore";
-import { db } from "../../config/firebase";
+import { auth, db } from "../../config/firebase";
 import { CategoryType } from '../../types';
 
 const CreateNote: React.FC = () => {
@@ -39,6 +39,7 @@ const CreateNote: React.FC = () => {
                 title: title,
                 details: details,
                 category: category,
+                userId: auth?.currentUser?.uid,
             });
 
             setTitle('');
