@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
 import {theme} from "../../theme";
 import {useLocation, useNavigate} from 'react-router-dom';
 import {AddCircleOutlined, LoginOutlined, SubjectOutlined} from '@mui/icons-material';
@@ -134,11 +133,6 @@ const Layout: React.FC<LayoutProps> = ({window, children}) => {
             </Page>
         </Box>
     );
-};
-
-Layout.propTypes = {
-    window: PropTypes.func,
-    children: PropTypes.node.isRequired,
 };
 
 export default Layout;

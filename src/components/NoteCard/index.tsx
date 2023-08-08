@@ -1,18 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { StyledAvatar, StyledCard } from './styled';
 import { CardContent, CardHeader, IconButton, Typography } from '@mui/material';
 import { DeleteOutlined, EditOutlined } from '@mui/icons-material';
 import { theme } from "../../theme";
-import { Note, CategoryType } from '../../types';
+import { Note } from '../../types';
 
 interface NoteCardProps {
-    noteProp: Note; // Zmiana nazwy propsa note na noteProp
+    noteProp: Note;
     handleDelete: (id: string) => void;
 }
 
-const NoteCard: React.FC<NoteCardProps> = ({ noteProp, handleDelete }) => { // Zmiana note na noteProp
+const NoteCard: React.FC<NoteCardProps> = ({ noteProp, handleDelete }) => {
     const navigate = useNavigate();
 
     return (
@@ -41,16 +40,6 @@ const NoteCard: React.FC<NoteCardProps> = ({ noteProp, handleDelete }) => { // Z
             </StyledCard>
         </div>
     );
-};
-
-NoteCard.propTypes = {
-    noteProp: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        category: PropTypes.oneOf<CategoryType>(["money", "todos", "reminders", "work"]),
-        details: PropTypes.string.isRequired,
-    }).isRequired,
-    handleDelete: PropTypes.func.isRequired,
 };
 
 export default NoteCard;
