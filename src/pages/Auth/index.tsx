@@ -2,17 +2,20 @@ import React, { useState } from 'react';
 import { Box, Button, Container, Input } from "@mui/material";
 import { createUserWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth"
 import { auth, GoogleProvider } from "../../config/firebase"
+import { useNavigate } from "react-router-dom";
 
 const Auth: React.FC = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     console.log(auth?.currentUser?.email);
 
     const signIn = async () => {
         try {
             await createUserWithEmailAndPassword(auth, email, password);
+            navigate("/")
         } catch (err) {
             console.error(err)
         }
@@ -21,6 +24,7 @@ const Auth: React.FC = () => {
     const signInWithGoogle = async () => {
         try {
             await signInWithPopup(auth, GoogleProvider);
+            navigate("/")
         } catch (err) {
             console.error(err)
         }
@@ -29,6 +33,7 @@ const Auth: React.FC = () => {
     const logout = async () => {
         try {
             await signOut(auth);
+            navigate("/")
         } catch (err) {
             console.error(err)
         }

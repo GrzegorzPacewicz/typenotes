@@ -28,6 +28,7 @@ const Header = () => {
         handleCloseUserMenu();
         try {
             await signInWithPopup(auth, GoogleProvider);
+            window.location.reload();
         } catch (err) {
             console.error(err)
         }
@@ -37,6 +38,7 @@ const Header = () => {
         handleCloseUserMenu();
         try {
             await signOut(auth);
+            window.location.reload();
         } catch (err) {
             console.error(err)
         }
