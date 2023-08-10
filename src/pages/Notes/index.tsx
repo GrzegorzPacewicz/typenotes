@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { collection, deleteDoc, doc, getDocs, QuerySnapshot } from "firebase/firestore";
-import { auth, db } from "../../config/firebase";
+import { db, auth } from "../../config/firebase";
 import NoteCard from "../../components/NoteCard";
 import Masonry from "@mui/lab/Masonry";
 import { Note } from '../../types';
@@ -13,23 +13,27 @@ const Notes: React.FC = () => {
     const getNotesList = async () => {
         try {
             const data: QuerySnapshot = await getDocs(notesCollectionRef);
-            const filteredData: Note[] = data.docs.map((doc) => {
-                const { id, ...noteData } = doc.data() as Note;
-                return {
-                    id: doc.id,
-                    ...noteData,
-                    userId: auth?.currentUser?.uid,
-                };
-            });
+            const filteredData: Note[] = data.docs
+                .map((doc) => {
+                    const { id, ...noteData } = doc.data() as Note;
+                    return {
+                        id: doc.id,
+                        ...noteData,
+                    };
+                })
+                .filter((note) => note.userId === auth?.currentUser?.uid);
+
             setNotesList(filteredData);
         } catch (err) {
             console.error(err);
         }
     };
 
+
     useEffect(() => {
         getNotesList();
-    }, []);
+    }, [auth?.currentUser?.uid]); // Only re-run when the UID changes
+
 
     const deleteNote = async (id: string): Promise<void> => {
         const noteDoc = doc(db, "Notes", id);
