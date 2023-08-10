@@ -11,7 +11,7 @@ Aplication to type notes with Firebase on the backend.
 - [Available Scripts](#available-scripts)
 
 ## Preview
-You can find the app under the link [https://grzegorz-notes.web.app/](#https://grzegorz-notes.web.app/)
+You can find the app under the link [https://grzegorz-notes.web.app/](https://grzegorz-notes.web.app/)
 
 ## Demo
 soon
@@ -28,4 +28,4 @@ soon
 ## External sources
 soon
 
-## Avaiable scripts
+## Available scripts
