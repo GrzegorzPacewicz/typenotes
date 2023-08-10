@@ -27,6 +27,7 @@ const EditNote: React.FC = () => {
                         title: noteData.title || '',
                         category: noteData.category as CategoryType || 'todos',
                         details: noteData.details || '',
+                        userId: noteData.uid || '',
                     });
                 } else {
                     console.log('Note not found.');

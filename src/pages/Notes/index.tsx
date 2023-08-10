@@ -13,22 +13,26 @@ const Notes: React.FC = () => {
     const getNotesList = async () => {
         try {
             const data: QuerySnapshot = await getDocs(notesCollectionRef);
-            const filteredData: Note[] = data.docs
-                .map((doc) => {
-                    const { id, ...noteData } = doc.data() as Note;
-                    return {
+            const filteredData: Note[] = [];
+
+            data.docs.forEach((doc) => {
+                const noteData = doc.data() as Note;
+                if (noteData.userId === auth?.currentUser?.uid) {
+                    filteredData.push({
                         id: doc.id,
-                        ...noteData,
-                    };
-                })
-                .filter((note) => note.userId === auth?.currentUser?.uid);
+                        title: noteData.title,
+                        category: noteData.category,
+                        details: noteData.details,
+                        userId: noteData.userId,
+                    });
+                }
+            });
 
             setNotesList(filteredData);
         } catch (err) {
             console.error(err);
         }
     };
-
 
     useEffect(() => {
         getNotesList();
