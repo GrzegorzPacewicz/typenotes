@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { collection, deleteDoc, doc, getDocs, QuerySnapshot } from "firebase/firestore";
-import { db, auth } from "../../config/firebase";
+import React, { useEffect } from 'react';
+import { collection, getDocs } from "firebase/firestore";
+import { auth, db } from "../../config/firebase";
 import NoteCard from "../../components/NoteCard";
 import Masonry from "@mui/lab/Masonry";
 import { Note } from '../../types';
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 
 const Notes: React.FC = () => {
-    const [notesList, setNotesList] = useState<Note[]>([]);
     const notesCollectionRef = collection(db, "Notes");
 
-    const getNotesList = async () => {
-        try {
-            const data: QuerySnapshot = await getDocs(notesCollectionRef);
+    const {data, status, error} = useQuery({
+        queryKey: ["notesData"],
+        queryFn: async () => {
+            const {docs} = await getDocs(notesCollectionRef);
             const filteredData: Note[] = [];
 
-            data.docs.forEach((doc) => {
+            docs.forEach((doc) => {
                 const noteData = doc.data() as Note;
                 if (noteData.userId === auth?.currentUser?.uid) {
                     filteredData.push({
@@ -27,22 +28,11 @@ const Notes: React.FC = () => {
                     });
                 }
             });
+            return filteredData;
+        },
+    });
 
-            setNotesList(filteredData);
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
-    useEffect(() => {
-        getNotesList();
-    }, [auth?.currentUser?.uid]); // Only re-run when the UID changes
-
-
-    const deleteNote = async (id: string): Promise<void> => {
-        const noteDoc = doc(db, "Notes", id);
-        await deleteDoc(noteDoc);
-        await getNotesList();
+    const deleteNote = () => {
     };
 
     useEffect(() => {
@@ -51,15 +41,82 @@ const Notes: React.FC = () => {
 
     return (
         <Container sx={{marginTop: '20px'}}>
-            <Masonry spacing={3} columns={{xs: 1, md: 2, lg: 3}}>
-                {notesList.map((note) => (
-                    <div key={note.id}>
-                        <NoteCard noteProp={note} handleDelete={deleteNote}/>
-                    </div>
-                ))}
-            </Masonry>
+            {status === "loading" && <Typography>Loading..</Typography>}
+            {status === "error" && <Typography>Error! {(error as Error).message}</Typography>}
+            {status === "success" && (
+                <Masonry spacing={3} columns={{xs: 1, md: 2, lg: 3}}>
+                    {data?.map((note) => (
+                        <div key={note.id}>
+                            <NoteCard noteProp={note} handleDelete={deleteNote}/>
+                        </div>
+                    ))}
+                </Masonry>
+            )}
         </Container>
     );
 };
 
 export default Notes;
+
+// import React, { useEffect } from 'react';
+// import { collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
+// import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'; // Import the necessary hooks
+// import { db, auth } from '../../config/firebase';
+// import NoteCard from '../../components/NoteCard';
+// import Masonry from '@mui/lab/Masonry';
+// import { Note } from '../../types';
+// import { Container } from '@mui/material';
+//
+// const Notes: React.FC = () => {
+//     const notesCollectionRef = collection(db, 'Notes');
+//     const queryClient = useQueryClient();
+//
+//     // Fetch notes data using useQuery hook
+//     const { data: notesList } = useQuery<Note[]>(['notes', auth?.currentUser?.uid], async () => {
+//         const data = await getDocs(notesCollectionRef);
+//         const filteredData: Note[] = [];
+//
+//         data.docs.forEach((doc) => {
+//             const noteData = doc.data() as Note;
+//             if (noteData.userId === auth?.currentUser?.uid) {
+//                 filteredData.push({
+//                     id: doc.id,
+//                     title: noteData.title,
+//                     category: noteData.category,
+//                     details: noteData.details,
+//                     userId: noteData.userId,
+//                 });
+//             }
+//         });
+//
+//         return filteredData;
+//     });
+//
+//     // Mutation function for deleting a note
+//     const deleteNoteMutation = useMutation(async (id: string) => {
+//         const noteDoc = doc(db, 'Notes', id);
+//         await deleteDoc(noteDoc);
+//     }, {
+//         onSuccess: () => {
+//             queryClient.invalidateQueries('notes');
+//         },
+//     });
+//
+//     useEffect(() => {
+//         window.scrollTo(0, 0);
+//     }, []);
+//
+//     return (
+//         <Container sx={{marginTop: '20px'}}>
+//             <Masonry spacing={3} columns={{xs: 1, md: 2, lg: 3}}>
+//                 {notesList?.map((note) => (
+//                     <div key={note.id}>
+//                         <NoteCard noteProp={note} handleDelete={() => deleteNoteMutation.mutate(note.id)} />
+//                     </div>
+//                 ))}
+//             </Masonry>
+//         </Container>
+//     );
+// };
+//
+// export default Notes;
