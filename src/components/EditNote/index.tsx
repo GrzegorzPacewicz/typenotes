@@ -14,7 +14,7 @@ const EditNote: React.FC = () => {
 
     const {id} = useParams<{ id: string }>();
 
-    const {note, status, error} = useNoteQuery(id!);
+    const {note} = useNoteQuery(id!);
     const queryClient = useQueryClient();
 
     const editNoteMutation = useEditNoteMutation();
