@@ -4,56 +4,50 @@ import { Box, Button, Container, FormControlLabel, FormLabel, Radio, RadioGroup,
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { StyledFormControl, StyledTextField } from '../../pages/CreateNote/styled';
-import { CategoryType, Note } from '../../types';
-import { deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
-import { auth, db } from '../../config/firebase';
+import { Note } from '../../types';
+import { useNoteQuery } from "../../hooks/useNoteQuery";
+import useDeleteNoteMutation from "../../hooks/useDeleteNoteMutation";
+import { useQueryClient } from "@tanstack/react-query";
+import useEditNoteMutation from "../../hooks/useEditNoteMutation";
 
 const EditNote: React.FC = () => {
+
     const {id} = useParams<{ id: string }>();
-    const [note, setNote] = useState<Note | null>(null);
-    const navigate = useNavigate();
+
+    const {note, status, error} = useNoteQuery(id!);
+    const queryClient = useQueryClient();
+
+    const editNoteMutation = useEditNoteMutation();
+    const deleteNoteMutation = useDeleteNoteMutation();
+
     const [titleError, setTitleError] = useState(false);
     const [detailsError, setDetailsError] = useState(false);
 
-    useEffect(() => {
-        const fetchNoteById = async (id: string) => {
-            try {
-                const noteDocRef = doc(db, "Notes", id);
-                const noteSnapshot = await getDoc(noteDocRef);
-                if (noteSnapshot.exists()) {
-                    const noteData = noteSnapshot.data();
-                    setNote({
-                        id: noteSnapshot.id,
-                        title: noteData.title || '',
-                        category: noteData.category as CategoryType || 'todos',
-                        details: noteData.details || '',
-                        userId: noteData.uid || '',
-                    });
-                } else {
-                    console.log('Note not found.');
-                }
-            } catch (error) {
-                console.error('Error fetching note:', error);
-            }
-        };
-        if (id) {
-            fetchNoteById(id)
-        }
-    }, [id]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
         const {name, value} = event.target;
-        setNote((prevNote) => ({
-            ...prevNote!,
-            [name]: value,
-        }));
+
+        queryClient.setQueryData(["notesData"], (prevNotes) => {
+            if (Array.isArray(prevNotes)) {
+                return prevNotes.map((n: Note) => {
+                    if (n.id === note?.id) {
+                        return {...n, [name]: value};
+                    }
+                    return n;
+                });
+            }
+            return prevNotes;
+        });
     };
 
-    const handleEdit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleEdit = (event: React.FormEvent<HTMLFormElement>) => {
+
         event.preventDefault();
         setTitleError(false);
         setDetailsError(false);
@@ -73,32 +67,16 @@ const EditNote: React.FC = () => {
             return;
         }
 
-        try {
-            if (note?.id) {
-                const noteDocRef = doc(db, "Notes", note.id);
-                await updateDoc(noteDocRef, {
-                    title: note?.title,
-                    category: note?.category,
-                    details: note?.details,
-                    userId: auth?.currentUser?.uid,
-                });
-                navigate("/");
-            }
-        } catch (error) {
-            console.error("Error updating note:", error);
+        if (note) {
+            editNoteMutation.mutate({
+                id: note.id,
+                userId: note.userId,
+                title: note.title,
+                category: note.category,
+                details: note.details,
+            });
         }
-    };
-
-    const handleDelete = async () => {
-        try {
-            if (note?.id) {
-                const noteDocRef = doc(db, "Notes", note.id);
-                await deleteDoc(noteDocRef);
-                navigate("/");
-            }
-        } catch (error) {
-            console.error('Error deleting note:', error);
-        }
+        navigate('/');
     };
 
     return (
@@ -148,10 +126,14 @@ const EditNote: React.FC = () => {
                                 color="primary"
                                 name="category"
                             >
-                                <FormControlLabel value="money" control={<Radio/>} label="Money"/>
-                                <FormControlLabel value="todos" control={<Radio/>} label="Todos"/>
-                                <FormControlLabel value="reminders" control={<Radio/>} label="Reminders"/>
-                                <FormControlLabel value="work" control={<Radio/>} label="Work"/>
+                                {["money", "todos", "reminders", "work"].map((option) => (
+                                    <FormControlLabel
+                                        key={option}
+                                        value={option}
+                                        control={<Radio/>}
+                                        label={option.charAt(0).toUpperCase() + option.slice(1)}
+                                    />
+                                ))}
                             </RadioGroup>
                         </StyledFormControl>
 
@@ -168,7 +150,7 @@ const EditNote: React.FC = () => {
                             <Button
                                 color="warning"
                                 variant="contained"
-                                onClick={handleDelete}
+                                onClick={() => deleteNoteMutation.mutate(note?.id)}
                                 endIcon={<DeleteOutlinedIcon/>}
                             >
                                 Delete
