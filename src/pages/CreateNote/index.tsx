@@ -3,14 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { Button, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { StyledFormControl, StyledTextField } from './styled';
-import { addDoc, collection } from "firebase/firestore";
-import { auth, db } from "../../config/firebase";
+import { auth } from "../../config/firebase";
 import { CategoryType } from '../../types';
+import useAddNoteMutation from "../../hooks/useAddNoteMutation";
 
 const CreateNote: React.FC = () => {
 
-    const notesCollectionRef = collection(db, "Notes");
-
+    const addNoteMutation = useAddNoteMutation();
     const [title, setTitle] = useState<string>('');
     const [details, setDetails] = useState<string>('');
     const [category, setCategory] = useState<CategoryType>('todos'); // Set the default value here
@@ -35,11 +34,17 @@ const CreateNote: React.FC = () => {
         }
 
         try {
-            await addDoc(notesCollectionRef, {
-                title: title,
-                details: details,
-                category: category,
-                userId: auth?.currentUser?.uid,
+            const userId = auth.currentUser?.uid;
+            if (!userId) {
+                console.error('User ID is not available');
+                return;
+            }
+
+            await addNoteMutation.mutateAsync({
+                title,
+                details,
+                category,
+                userId
             });
 
             setTitle('');
@@ -53,7 +58,6 @@ const CreateNote: React.FC = () => {
             console.error(err);
         }
     };
-
     return (
         <>
             <Typography variant="h6" component="h2" color="textSecondary" gutterBottom>
@@ -103,7 +107,7 @@ const CreateNote: React.FC = () => {
                             <FormControlLabel
                                 key={option}
                                 value={option}
-                                control={<Radio />}
+                                control={<Radio/>}
                                 label={option.charAt(0).toUpperCase() + option.slice(1)}
                             />
                         ))}
