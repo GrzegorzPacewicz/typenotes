@@ -23,6 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 src/config/dataAPIKeys.ts
+dist
+public
+.firebase
 
 # production
 /build
