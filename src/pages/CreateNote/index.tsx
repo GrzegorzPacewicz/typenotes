@@ -10,6 +10,7 @@ import useAddNoteMutation from "../../hooks/useAddNoteMutation";
 const CreateNote: React.FC = () => {
 
     const addNoteMutation = useAddNoteMutation();
+
     const [title, setTitle] = useState<string>('');
     const [details, setDetails] = useState<string>('');
     const [category, setCategory] = useState<CategoryType>('todos'); // Set the default value here
@@ -20,26 +21,21 @@ const CreateNote: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setTitleError(!title.trim());
-        setDetailsError(!details.trim());
 
-        if (!title.trim()) {
-            setTitleError(true);
+        const userId = auth.currentUser?.uid;
+        if (!userId) {
+            console.error('User ID is not available');
             return;
         }
 
-        if (!details.trim()) {
-            setDetailsError(true);
+        setTitleError(!title.trim());
+        setDetailsError(!details.trim());
+
+        if (!title.trim() || !details.trim()) {
             return;
         }
 
         try {
-            const userId = auth.currentUser?.uid;
-            if (!userId) {
-                console.error('User ID is not available');
-                return;
-            }
-
             await addNoteMutation.mutateAsync({
                 title,
                 details,
@@ -58,6 +54,7 @@ const CreateNote: React.FC = () => {
             console.error(err);
         }
     };
+
     return (
         <>
             <Typography variant="h6" component="h2" color="textSecondary" gutterBottom>
