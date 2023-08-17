@@ -22,7 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-src/config/firebase.tsx
+src/config/dataAPIKeys.ts
 
 # production
 /build
