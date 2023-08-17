@@ -24,7 +24,6 @@ dist-ssr
 *.sw?
 src/config/dataAPIKeys.ts
 dist
-public
 .firebase
 
 # production
