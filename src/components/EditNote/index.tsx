@@ -79,6 +79,16 @@ const EditNote: React.FC = () => {
         navigate('/');
     };
 
+    const handleDelete = () => {
+        if (note?.id) {
+            deleteNoteMutation.mutate(note.id, {
+                onSuccess: () => {
+                    navigate('/');
+                },
+            });
+        }
+    };
+
     return (
         <>
             {note ? (
@@ -150,7 +160,7 @@ const EditNote: React.FC = () => {
                             <Button
                                 color="warning"
                                 variant="contained"
-                                onClick={() => deleteNoteMutation.mutate(note?.id)}
+                                onClick={handleDelete}
                                 endIcon={<DeleteOutlinedIcon/>}
                             >
                                 Delete
