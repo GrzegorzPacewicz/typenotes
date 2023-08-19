@@ -51,7 +51,7 @@ const SignUp: React.FC = () => {
     };
 
     return (
-        <Container sx={{maxWidth: 'none'}} style={{maxWidth: 500}}>
+        <Container style={{maxWidth: 500}}>
             <Card>
                 <CardContent>
                     <Typography variant="h5" align="center" gutterBottom>

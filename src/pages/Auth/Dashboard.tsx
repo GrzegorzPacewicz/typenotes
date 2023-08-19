@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, Button, Card, CardContent, Typography } from "@mui/material";
+import { Alert, Button, Card, CardContent, Container, Typography } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
 
@@ -21,6 +21,7 @@ export default function Dashboard() {
     };
 
     return (
+        <Container style={{maxWidth: 500}}>
         <Card>
             <CardContent>
                 <Typography variant="h5" align="center" gutterBottom>
@@ -46,5 +47,6 @@ export default function Dashboard() {
                 </Button>
             </Typography>
         </Card>
+    </Container>
     );
 }

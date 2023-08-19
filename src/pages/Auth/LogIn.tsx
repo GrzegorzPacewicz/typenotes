@@ -50,11 +50,11 @@ const LogIn: React.FC = () => {
     };
 
     return (
-        <Container sx={{maxWidth: 'none'}} style={{maxWidth: 500}}>
+        <Container style={{maxWidth: 500}}>
             <Card>
                 <CardContent>
                     <Typography variant="h5" align="center" gutterBottom>
-                        Sign Up
+                        Log In
                     </Typography>
                     {error && <Alert severity="error">{error}</Alert>}
                     <form onSubmit={handleSubmit}>
@@ -81,7 +81,7 @@ const LogIn: React.FC = () => {
                             fullWidth
                             type="submit"
                         >
-                            Sign Up
+                            Log In
                         </Button>
                     </form>
                 </CardContent>

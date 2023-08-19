@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Card, CardContent, Typography, TextField, Button, Alert, Link } from "@mui/material";
+import { Card, CardContent, Typography, TextField, Button, Alert, Link, Container } from "@mui/material";
 
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -16,6 +16,7 @@ export default function UpdateProfile() {
     };
 
     return (
+        <Container style={{maxWidth: 500}}>
         <Card>
             <CardContent>
                 <Typography variant="h5" align="center" gutterBottom>
@@ -57,5 +58,6 @@ export default function UpdateProfile() {
                 <NavLink to={"/"}>Cancel</NavLink>
             </Typography>
         </Card>
+        </Container>
     );
 }
