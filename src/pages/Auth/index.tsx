@@ -5,6 +5,7 @@ import { auth, GoogleProvider } from "../../config/firebase"
 import { NavLink, useNavigate } from "react-router-dom";
 import SignUp from "./SignUp";
 import ForgotPassword from "./ForgotPassword";
+import UpdateProfile from "./UpdateProfile";
 
 const Auth: React.FC = () => {
 
@@ -54,29 +55,45 @@ const Auth: React.FC = () => {
 
     return (
         <Container >
-            <Box display="flex" gap={2} justifyContent="center">
-                <Input
-                    placeholder="Email..."
-                    onChange={(event) => setEmail(event.target.value)}
-                />
-                <Input
-                    placeholder="Password..."
-                    type="password"
-                    onChange={(event) => setPassword(event.target.value)}
-                />
-                <Button onClick={signIn}>Sign In</Button>
+            {/*<Box display="flex" gap={2} justifyContent="center">*/}
+            {/*    <Input*/}
+            {/*        placeholder="Email..."*/}
+            {/*        onChange={(event) => setEmail(event.target.value)}*/}
+            {/*    />*/}
+            {/*    <Input*/}
+            {/*        placeholder="Password..."*/}
+            {/*        type="password"*/}
+            {/*        onChange={(event) => setPassword(event.target.value)}*/}
+            {/*    />*/}
+            {/*    <Button onClick={signIn}>Sign In</Button>*/}
 
-            </Box>
-            <Box display="flex" gap={2} justifyContent="center" mt={10}>
-                <Button onClick={signInWithGoogle}>Sign In With Google</Button>
-                <Button onClick={logout}>Logout</Button>
-            </Box>
+            {/*</Box>*/}
+            {/*<Box display="flex" gap={2} justifyContent="center" mt={10}>*/}
+            {/*    <Button onClick={signInWithGoogle}>Sign In With Google</Button>*/}
+            {/*    <Button onClick={logout}>Logout</Button>*/}
+            {/*</Box>*/}
 
           {/*new component*/}
 
-            <SignUp />
+            <Typography variant="body1" align="center" mt={4}>
+                 <NavLink to={'/update'}>Update Profile</NavLink>
+            </Typography>
 
-            <ForgotPassword/>
+            <Typography variant="body1" align="center" mt={4}>
+                 <NavLink to={'/signup'}>Sign Up</NavLink>
+            </Typography>
+
+            <Typography variant="body1" align="center" mt={4}>
+                <NavLink to={'/login'}>Log In</NavLink>
+            </Typography>
+
+            <Typography variant="body1" align="center" mt={4}>
+                <NavLink to={'/forgot-password'}>Forgot Password</NavLink>
+            </Typography>
+
+            <Typography variant="body1" align="center" mt={4}>
+                <NavLink to={'/dashboard'}>Dashboard</NavLink>
+            </Typography>
 
         </Container>
     );
