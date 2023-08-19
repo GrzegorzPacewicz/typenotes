@@ -1,54 +1,43 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Alert, Button, Card, CardContent, Container, TextField, Typography } from "@mui/material";
-import { createUserWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth"
-import { auth, GoogleProvider } from "../../config/firebase"
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 const SignUp: React.FC = () => {
-
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const navigate = useNavigate();
-    const [error, setError] = useState('')
 
-    console.log(auth?.currentUser?.email);
+    const emailRef = useRef<HTMLInputElement | null>(null); // Explicitly type the refs
+    const passwordRef = useRef<HTMLInputElement | null>(null);
+    const passwordConfirmRef = useRef<HTMLInputElement | null>(null);
 
-    const signIn = async () => {
+    const { signup } = useAuth();
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        if (!emailRef.current || !passwordRef.current || !passwordConfirmRef.current) {
+            return;
+        }
+
+        if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+            setError("Passwords do not match");
+            return;
+        }
 
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
-            navigate("/")
-        } catch (err) {
-            console.error(err)
+            setError("");
+            setLoading(true);
+            await signup(emailRef.current.value, passwordRef.current.value);
+            navigate("/");
+        } catch (error) {
+            setError((error as Error).message);
         }
-    };
 
-    const signInWithGoogle = async () => {
-        try {
-            await signInWithPopup(auth, GoogleProvider);
-            navigate("/")
-        } catch (err) {
-            console.error(err)
-        }
-    };
+        setLoading(false);
+    }
 
-    const logout = async () => {
-        try {
-            await signOut(auth);
-            navigate("/")
-        } catch (err) {
-            console.error(err)
-        }
-    };
-
-    const handleSubmit = () => {
-    };
-    const emailRef = () => {
-    };
-    const passwordConfirmRef = () => {
-    };
-    const passwordRef = () => {
-    };
 
     return (
         <Container style={{maxWidth: 500}}>
@@ -84,7 +73,7 @@ const SignUp: React.FC = () => {
                             margin="normal"
                         />
                         <Button
-                            // disabled={loading}
+                            disabled={loading}
                             variant="contained"
                             color="primary"
                             fullWidth
