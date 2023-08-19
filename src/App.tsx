@@ -6,6 +6,7 @@ import EditNote from './components/EditNote';
 import Auth from "./pages/Auth";
 import CreateNote from "./pages/CreateNote";
 import SignUp from "./pages/Auth/SignUp";
+import LogIn from "./pages/Auth/Login";
 
 const App: React.FC = () => {
     return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
                     <Route path="/edit/:id" element={<EditNote/>}/>
                     <Route path="/auth" element={<Auth/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
+                    <Route path="/login" element={<LogIn/>}/>
                     <Route path="*" element={<Notes/>}/>
                 </Routes>
             </Layout>

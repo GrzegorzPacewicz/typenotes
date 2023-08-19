@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword, signInWithPopup, signOut } from "fireba
 import { auth, GoogleProvider } from "../../config/firebase"
 import { NavLink, useNavigate } from "react-router-dom";
 
-const SignUp: React.FC = () => {
+const LogIn: React.FC = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -45,8 +45,7 @@ const SignUp: React.FC = () => {
     };
     const emailRef = () => {
     };
-    const passwordConfirmRef = () => {
-    };
+
     const passwordRef = () => {
     };
 
@@ -55,7 +54,7 @@ const SignUp: React.FC = () => {
             <Card>
                 <CardContent>
                     <Typography variant="h5" align="center" gutterBottom>
-                        Log In
+                        Sign Up
                     </Typography>
                     {error && <Alert severity="error">{error}</Alert>}
                     <form onSubmit={handleSubmit}>
@@ -75,14 +74,6 @@ const SignUp: React.FC = () => {
                             fullWidth
                             margin="normal"
                         />
-                        <TextField
-                            label="Password Confirmation"
-                            type="password"
-                            inputRef={passwordConfirmRef}
-                            required
-                            fullWidth
-                            margin="normal"
-                        />
                         <Button
                             // disabled={loading}
                             variant="contained"
@@ -96,10 +87,10 @@ const SignUp: React.FC = () => {
                 </CardContent>
             </Card>
             <Typography variant="body1" align="center" mt={4}>
-                Already have an account? <NavLink to={'/login'}> Log In</NavLink>
+                Already have an account? <NavLink to={'/signup'}>Sign Up</NavLink>
             </Typography>
         </Container>
     );
 };
 
-export default SignUp;
+export default LogIn;
