@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Notes from './pages/Notes';
 import Layout from './components/Layout';
 import EditNote from './components/EditNote';
@@ -8,7 +8,7 @@ import CreateNote from "./pages/CreateNote";
 
 const App: React.FC = () => {
     return (
-        <HashRouter>
+        <BrowserRouter  >
             <Layout>
                 <Routes>
                     <Route path="/" element={<Notes/>}/>
@@ -18,7 +18,7 @@ const App: React.FC = () => {
                     <Route path="*" element={<Notes/>}/>
                 </Routes>
             </Layout>
-        </HashRouter>
+        </BrowserRouter>
     );
 };
 
