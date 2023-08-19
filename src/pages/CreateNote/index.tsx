@@ -56,7 +56,7 @@ const CreateNote: React.FC = () => {
     };
 
     return (
-        <Container sx={{ maxWidth: '800' }} style={{ maxWidth: 800 }}>
+        <Container style={{ maxWidth: 800 }}>
             <Typography variant="h6" component="h2" color="textSecondary" gutterBottom>
                 Create a New Note
                 {(titleError || detailsError) && (
