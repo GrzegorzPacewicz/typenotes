@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
-import { Box, Button, Container, Input } from "@mui/material";
+import { Alert, Box, Button, Card, CardContent, Container, Input, TextField, Typography } from "@mui/material";
 import { createUserWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth"
 import { auth, GoogleProvider } from "../../config/firebase"
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import SignUp from "./SignUp";
 
 const Auth: React.FC = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const [error, setError] = useState('')
 
     console.log(auth?.currentUser?.email);
 
     const signIn = async () => {
+
         try {
             await createUserWithEmailAndPassword(auth, email, password);
             navigate("/")
@@ -39,8 +42,17 @@ const Auth: React.FC = () => {
         }
     };
 
+    const handleSubmit = () => {
+    };
+    const emailRef = () => {
+    };
+    const passwordConfirmRef = () => {
+    };
+    const passwordRef = () => {
+    };
+
     return (
-        <Container>
+        <Container >
             <Box display="flex" gap={2} justifyContent="center">
                 <Input
                     placeholder="Email..."
@@ -58,8 +70,12 @@ const Auth: React.FC = () => {
                 <Button onClick={signInWithGoogle}>Sign In With Google</Button>
                 <Button onClick={logout}>Logout</Button>
             </Box>
-        </Container>
 
+          {/*new component*/}
+
+            <SignUp />
+
+        </Container>
     );
 };
 
