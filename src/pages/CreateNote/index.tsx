@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
+import { Button, Container, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { StyledFormControl, StyledTextField } from './styled';
 import { auth } from "../../config/firebase";
@@ -56,7 +56,7 @@ const CreateNote: React.FC = () => {
     };
 
     return (
-        <>
+        <Container sx={{ maxWidth: '800' }} style={{ maxWidth: 800 }}>
             <Typography variant="h6" component="h2" color="textSecondary" gutterBottom>
                 Create a New Note
                 {(titleError || detailsError) && (
@@ -115,7 +115,7 @@ const CreateNote: React.FC = () => {
                     Submit
                 </Button>
             </form>
-        </>
+        </Container>
     );
 };
 
