@@ -14,8 +14,8 @@ const SignUp: React.FC = () => {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
-    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
 
         if (!emailRef.current || !passwordRef.current || !passwordConfirmRef.current) {
             return;
@@ -30,7 +30,7 @@ const SignUp: React.FC = () => {
             setError("");
             setLoading(true);
             await signup(emailRef.current.value, passwordRef.current.value);
-            navigate("/");
+            navigate("/login");
         } catch (error) {
             setError((error as Error).message);
         }

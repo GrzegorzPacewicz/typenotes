@@ -1,53 +1,35 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Alert, Button, Card, CardContent, Container, TextField, Typography } from "@mui/material";
-import { createUserWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth"
-import { auth, GoogleProvider } from "../../config/firebase"
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 const LogIn: React.FC = () => {
+    const emailRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const {login} = useAuth()
+    const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const navigate = useNavigate();
-    const [error, setError] = useState('')
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault()
 
-    console.log(auth?.currentUser?.email);
-
-    const signIn = async () => {
+        if (!emailRef.current || !passwordRef.current) {
+            return;
+        }
 
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
+            setError("")
+            setLoading(true)
+            await login(emailRef.current.value, passwordRef.current.value)
             navigate("/")
-        } catch (err) {
-            console.error(err)
+        } catch (error) {
+            setError((error as Error).message);
         }
-    };
 
-    const signInWithGoogle = async () => {
-        try {
-            await signInWithPopup(auth, GoogleProvider);
-            navigate("/")
-        } catch (err) {
-            console.error(err)
-        }
-    };
+        setLoading(false)
+    }
 
-    const logout = async () => {
-        try {
-            await signOut(auth);
-            navigate("/")
-        } catch (err) {
-            console.error(err)
-        }
-    };
-
-    const handleSubmit = () => {
-    };
-    const emailRef = () => {
-    };
-
-    const passwordRef = () => {
-    };
 
     return (
         <Container style={{maxWidth: 500}}>
@@ -75,7 +57,7 @@ const LogIn: React.FC = () => {
                             margin="normal"
                         />
                         <Button
-                            // disabled={loading}
+                            disabled={loading}
                             variant="contained"
                             color="primary"
                             fullWidth
