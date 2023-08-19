@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword, signInWithPopup, signOut } from "fireba
 import { auth, GoogleProvider } from "../../config/firebase"
 import { NavLink, useNavigate } from "react-router-dom";
 import SignUp from "./SignUp";
+import ForgotPassword from "./ForgotPassword";
 
 const Auth: React.FC = () => {
 
@@ -74,6 +75,8 @@ const Auth: React.FC = () => {
           {/*new component*/}
 
             <SignUp />
+
+            <ForgotPassword/>
 
         </Container>
     );
