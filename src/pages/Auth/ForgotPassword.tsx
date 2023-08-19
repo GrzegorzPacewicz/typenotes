@@ -1,15 +1,37 @@
 import React, { useRef, useState } from "react";
 import { Alert, Button, Card, CardContent, Container, TextField, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function ForgotPassword() {
-    const emailRef = useRef();
+
+    const emailRef = useRef<HTMLInputElement | null>(null); // Explicitly type the refs
+
     const [error, setError] = useState("");
-    const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
 
-    async function handleSubmit() {
+    const {resetPassword} = useAuth()
+    const [message, setMessage] = useState("")
 
+
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault()
+
+        if (!emailRef.current) {
+            return;
+        }
+
+        try {
+            setMessage("")
+            setError("")
+            setLoading(true)
+            await resetPassword(emailRef.current.value)
+            setMessage("Check your inbox for further instructions")
+        } catch {
+            setError("Failed to reset password")
+        }
+
+        setLoading(false)
     }
 
     return (
