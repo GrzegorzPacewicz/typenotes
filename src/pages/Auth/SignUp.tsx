@@ -4,13 +4,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
 const SignUp: React.FC = () => {
+
     const navigate = useNavigate();
+    const {signup} = useAuth();
 
     const emailRef = useRef<HTMLInputElement | null>(null); // Explicitly type the refs
     const passwordRef = useRef<HTMLInputElement | null>(null);
     const passwordConfirmRef = useRef<HTMLInputElement | null>(null);
 
-    const { signup } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
