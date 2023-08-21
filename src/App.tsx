@@ -30,8 +30,16 @@ const App: React.FC = () => {
                                 <CreateNote/>
                             </ProtectedRoutes>
                         }/>
-                        <Route path="/edit/:id" element={<EditNote/>}/>
-                        <Route path="/update" element={<UpdateProfile/>}/>
+                        <Route path="/edit/:id" element={
+                            <ProtectedRoutes>
+                                <EditNote/>
+                            </ProtectedRoutes>
+                        }/>
+                        <Route path="/update" element={
+                            <ProtectedRoutes>
+                                <UpdateProfile/>
+                            </ProtectedRoutes>
+                        }/>
                         <Route path="/dashboard" element={
                             <ProtectedRoutes>
                                 <Dashboard/>
@@ -39,7 +47,7 @@ const App: React.FC = () => {
                         }/>
                         <Route path="/auth" element={
                             <ProtectedRoutes>
-                            <Auth/>
+                                <Auth/>
                             </ProtectedRoutes>}/>
 
                         <Route path="/signup" element={<SignUp/>}/>
