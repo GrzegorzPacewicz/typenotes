@@ -56,17 +56,13 @@ export default function ForgotPassword() {
                             Reset Password
                         </Button>
                     </form>
-                    <Typography variant="body2" align="center" mt={3}>
-                        <NavLink to={'/login'}>
-                            Login
-                        </NavLink>
-                    </Typography>
+
                 </CardContent>
-                <Typography variant="body2" align="center" my={2}>
-                    Need an account?{" "}
-                    <NavLink to={'/signup'}>
-                        Sign Up
-                    </NavLink>
+                <Typography variant="body1" align="center">
+                    Already have an account? <NavLink to={'/login'}>Log In</NavLink>
+                </Typography>
+                <Typography variant="body1" align="center" my={2}>
+                   Need an account? <NavLink to={'/signup'}>Sign Up</NavLink>
                 </Typography>
             </Card>
         </Container>

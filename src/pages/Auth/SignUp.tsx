@@ -45,7 +45,7 @@ const SignUp: React.FC = () => {
             <Card>
                 <CardContent>
                     <Typography variant="h5" align="center" gutterBottom>
-                        Log In
+                        Sign Up
                     </Typography>
                     {error && <Alert severity="error">{error}</Alert>}
                     <form onSubmit={handleSubmit}>
@@ -84,10 +84,13 @@ const SignUp: React.FC = () => {
                         </Button>
                     </form>
                 </CardContent>
+                <Typography variant="body1" align="center">
+                    Already have an account? <NavLink to={'/login'}>Log In</NavLink>
+                </Typography>
+                <Typography variant="body1" align="center" my={2}>
+                    Forgot your password? <NavLink to={'/forgot-password'}>Password reset </NavLink>
+                </Typography>
             </Card>
-            <Typography variant="body1" align="center" mt={4}>
-                Already have an account? <NavLink to={'/login'}> Log In</NavLink>
-            </Typography>
         </Container>
     );
 };

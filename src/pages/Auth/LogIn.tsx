@@ -67,10 +67,14 @@ const LogIn: React.FC = () => {
                         </Button>
                     </form>
                 </CardContent>
+                <Typography variant="body1" align="center">
+                    Need an account? <NavLink to={'/signup'}>Sign Up</NavLink>
+                </Typography>
+                <Typography variant="body1" align="center" my={2}>
+                    Forgot your password? <NavLink to={'/forgot-password'}>Password reset </NavLink>
+                </Typography>
             </Card>
-            <Typography variant="body1" align="center" mt={4}>
-                Already have an account? <NavLink to={'/signup'}>Sign Up</NavLink>
-            </Typography>
+
         </Container>
     );
 };

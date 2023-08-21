@@ -61,7 +61,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             try {
                 await updatePassword(password);
             } catch (error) {
-                console.error("Błąd aktualizacji hasła:", error);
+                console.error(error);
                 throw new Error((error as Error).message);
             }
         }

@@ -7,7 +7,7 @@ import { updatePassword } from 'firebase/auth';
 export default function UpdateProfile() {
     const navigate = useNavigate();
 
-    const { currentUser } = useAuth();
+    const {currentUser} = useAuth();
     const emailRef = useRef<HTMLInputElement | null>(null)
 
     const newPasswordRef = useRef<HTMLInputElement | null>(null);
@@ -21,33 +21,24 @@ export default function UpdateProfile() {
         setLoading(true);
 
         try {
-            if (!currentUser) {
-                setError("User is not logged in");
+            if (!newPasswordRef.current) {
+                setError("New password field is not available");
                 setLoading(false);
                 return;
             }
 
-            if (newPasswordRef.current && newPasswordConfirmRef.current) {
-                if (newPasswordRef.current.value !== newPasswordConfirmRef.current.value) {
-                    setError("Passwords do not match");
-                } else {
-                    setError("");
-
-                    if (newPasswordRef.current.value) {
-                        await updatePassword(currentUser, newPasswordRef.current.value);
-                    }
-
-                    setLoading(false);
-                    navigate("/");
-                }
+            if (newPasswordRef.current.value !== newPasswordConfirmRef.current?.value) {
+                setError("Passwords do not match");
             } else {
-                setError("Invalid input");
-                setLoading(false);
+                setError("");
+                await updatePassword(currentUser, newPasswordRef.current.value);
+                navigate("/");
             }
         } catch (error) {
             setError((error as Error).message || "An error occurred");
-            setLoading(false);
         }
+
+        setLoading(false);
     }
 
     return (

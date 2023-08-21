@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import Notes from './pages/Notes';
 import Layout from './components/Layout';
 import EditNote from './components/EditNote';
@@ -11,24 +11,41 @@ import ForgotPassword from "./pages/Auth/ForgotPassword";
 import UpdateProfile from "./pages/Auth/UpdateProfile";
 import Dashboard from "./pages/Auth/Dashboard";
 import { AuthProvider } from "./contexts/AuthContext";
+import ProtectedRoutes from "./components/ProtectedRoutes";
 
 const App: React.FC = () => {
+
     return (
         <HashRouter>
             <AuthProvider>
                 <Layout>
                     <Routes>
-
-                        <Route path="/" element={<Notes/>}/>
-                        <Route path="/create" element={<CreateNote/>}/>
+                        <Route path="/" element={
+                            <ProtectedRoutes>
+                                <Notes/>
+                            </ProtectedRoutes>
+                        }/>
+                        <Route path="/create" element={
+                            <ProtectedRoutes>
+                                <CreateNote/>
+                            </ProtectedRoutes>
+                        }/>
                         <Route path="/edit/:id" element={<EditNote/>}/>
-                        <Route path="/auth" element={<Auth/>}/>
-                        {/*new components*/}
+                        <Route path="/update" element={<UpdateProfile/>}/>
+                        <Route path="/dashboard" element={
+                            <ProtectedRoutes>
+                                <Dashboard/>
+                            </ProtectedRoutes>
+                        }/>
+                        <Route path="/auth" element={
+                            <ProtectedRoutes>
+                            <Auth/>
+                            </ProtectedRoutes>}/>
+
                         <Route path="/signup" element={<SignUp/>}/>
                         <Route path="/login" element={<LogIn/>}/>
                         <Route path="/forgot-password" element={<ForgotPassword/>}/>
-                        <Route path="/update" element={<UpdateProfile/>}/>
-                        <Route path="/dashboard" element={<Dashboard/>}/>
+
 
                         <Route path="*" element={<Notes/>}/>
 
