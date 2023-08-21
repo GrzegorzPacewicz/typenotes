@@ -56,10 +56,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
         return Promise.reject(new Error("No user is logged in."));
     }
-
-    function updatePassword(password: Password): Promise<any> {
+    async function updatePassword(password: Password): Promise<any> {
         if (currentUser) {
-            return currentUser.updatePassword(password);
+            try {
+                await updatePassword(password);
+            } catch (error) {
+                console.error("Błąd aktualizacji hasła:", error);
+                throw new Error((error as Error).message);
+            }
         }
         return Promise.reject(new Error("No user is logged in."));
     }
