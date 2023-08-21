@@ -50,15 +50,9 @@ export default function UpdateProfile() {
                     </Typography>
                     {error && <Alert severity="error">{error}</Alert>}
                     <form onSubmit={handleSubmit}>
-                        <TextField
-                            label="Email"
-                            type="email"
-                            inputRef={emailRef}
-                            required
-                            defaultValue={currentUser?.email || ""}
-                            fullWidth
-                            margin="normal"
-                        />
+                        <Typography variant="body1" mt={4}>
+                            <strong>Email:</strong> {currentUser.email}
+                        </Typography>
                         <TextField
                             label="New password"
                             type="password"
