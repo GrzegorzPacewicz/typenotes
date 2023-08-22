@@ -2,13 +2,11 @@ import React, { useRef, useState } from 'react';
 import { Alert, Button, Card, CardContent, Container, TextField, Typography } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { signInWithPopup } from "firebase/auth";
-import { auth, GoogleProvider } from "../../config/firebase";
 
 const LogIn: React.FC = () => {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
-    const {login} = useAuth()
+    const {login, signInWithGoogle} = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
@@ -31,15 +29,6 @@ const LogIn: React.FC = () => {
 
         setLoading(false)
     }
-
-    const signInWithGoogle = async () => {
-        try {
-            await signInWithPopup(auth, GoogleProvider);
-            navigate("/")
-        } catch (err) {
-            console.error(err)
-        }
-    };
 
     return (
         <Container style={{maxWidth: 500}}>
@@ -82,9 +71,15 @@ const LogIn: React.FC = () => {
                         variant="outlined"
                         color="primary"
                         fullWidth
-                        type="submit"
-                        onClick={signInWithGoogle}
-                        sx={{mt:4}}
+                        type="button"
+                        onClick={() => {
+                            signInWithGoogle().then((success) => {
+                                if (success) {
+                                    navigate("/");
+                                }
+                            });
+                        }}
+                        sx={{ mt: 4 }}
                     >
                         Sign In With Google
                     </Button>

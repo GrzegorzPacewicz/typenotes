@@ -1,6 +1,11 @@
 import React, { useContext, useState, useEffect, ReactNode } from "react";
-import { auth } from "../config/firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import { auth, GoogleProvider } from "../config/firebase";
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    sendPasswordResetEmail,
+    signInWithPopup
+} from "firebase/auth";
 
 type Email = string;
 type Password = string;
@@ -9,6 +14,7 @@ interface AuthContextType {
     currentUser: any;
     login: (email: Email, password: Password) => Promise<any>;
     signup: (email: Email, password: Password) => Promise<any>;
+    signInWithGoogle: () => Promise<any>;
     logout: () => Promise<any>;
     resetPassword: (email: Email) => Promise<any>;
     updateEmail: (email: Email) => Promise<any>;
@@ -40,6 +46,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     function login(email: Email, password: Password): Promise<any> {
         return signInWithEmailAndPassword(auth, email, password);
+    }
+
+    function signInWithGoogle(): Promise<any>{
+        return signInWithPopup(auth, GoogleProvider)
     }
 
     function logout(): Promise<any> {
@@ -81,10 +91,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
         currentUser,
         login,
         signup,
+        signInWithGoogle,
         logout,
         resetPassword,
         updateEmail,
-        updatePassword
+        updatePassword,
     };
 
     return (
