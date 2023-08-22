@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Notes from './pages/Notes';
 import Layout from './components/Layout';
 import EditNote from './components/EditNote';
@@ -14,7 +14,7 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 const App: React.FC = () => {
 
     return (
-        <HashRouter>
+        <BrowserRouter>
             <AuthProvider>
                 <Layout>
                     <Routes>
@@ -49,7 +49,7 @@ const App: React.FC = () => {
                     </Routes>
                 </Layout>
             </AuthProvider>
-        </HashRouter>
+        </BrowserRouter>
     );
 };
 
