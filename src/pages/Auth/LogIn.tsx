@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 import { Alert, Button, Card, CardContent, Container, TextField, Typography } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import { signInWithPopup } from "firebase/auth";
+import { auth, GoogleProvider } from "../../config/firebase";
 
 const LogIn: React.FC = () => {
     const emailRef = useRef<HTMLInputElement>(null);
@@ -30,6 +32,14 @@ const LogIn: React.FC = () => {
         setLoading(false)
     }
 
+    const signInWithGoogle = async () => {
+        try {
+            await signInWithPopup(auth, GoogleProvider);
+            navigate("/")
+        } catch (err) {
+            console.error(err)
+        }
+    };
 
     return (
         <Container style={{maxWidth: 500}}>
@@ -66,8 +76,21 @@ const LogIn: React.FC = () => {
                             Log In
                         </Button>
                     </form>
+
+                    <Button
+                        disabled={loading}
+                        variant="outlined"
+                        color="primary"
+                        fullWidth
+                        type="submit"
+                        onClick={signInWithGoogle}
+                        sx={{mt:4}}
+                    >
+                        Sign In With Google
+                    </Button>
+
                 </CardContent>
-                <Typography variant="body1" align="center">
+                <Typography variant="body1" align="center" mt={2}>
                     Need an account? <NavLink to={'/signup'}>Sign Up</NavLink>
                 </Typography>
                 <Typography variant="body1" align="center" my={2}>

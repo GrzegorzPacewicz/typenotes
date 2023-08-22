@@ -55,23 +55,23 @@ const Auth: React.FC = () => {
 
     return (
         <Container >
-            {/*<Box display="flex" gap={2} justifyContent="center">*/}
-            {/*    <Input*/}
-            {/*        placeholder="Email..."*/}
-            {/*        onChange={(event) => setEmail(event.target.value)}*/}
-            {/*    />*/}
-            {/*    <Input*/}
-            {/*        placeholder="Password..."*/}
-            {/*        type="password"*/}
-            {/*        onChange={(event) => setPassword(event.target.value)}*/}
-            {/*    />*/}
-            {/*    <Button onClick={signIn}>Sign In</Button>*/}
+            <Box display="flex" gap={2} justifyContent="center">
+                <Input
+                    placeholder="Email..."
+                    onChange={(event) => setEmail(event.target.value)}
+                />
+                <Input
+                    placeholder="Password..."
+                    type="password"
+                    onChange={(event) => setPassword(event.target.value)}
+                />
+                <Button onClick={signIn}>Sign In</Button>
 
-            {/*</Box>*/}
-            {/*<Box display="flex" gap={2} justifyContent="center" mt={10}>*/}
-            {/*    <Button onClick={signInWithGoogle}>Sign In With Google</Button>*/}
-            {/*    <Button onClick={logout}>Logout</Button>*/}
-            {/*</Box>*/}
+            </Box>
+            <Box display="flex" gap={2} justifyContent="center" mt={10}>
+                <Button onClick={signInWithGoogle}>Sign In With Google</Button>
+                <Button onClick={logout}>Logout</Button>
+            </Box>
 
           {/*new component*/}
 
