@@ -35,9 +35,9 @@ const Layout: React.FC<LayoutProps> = ({window, children}) => {
             path: '/create',
         },
         {
-            text: 'Login',
+            text: 'Dashboard',
             icon: <LoginOutlined/>,
-            path: '/auth',
+            path: '/dashboard',
         },
     ];
 

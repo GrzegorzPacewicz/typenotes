@@ -1,13 +1,45 @@
-import React, { useState } from "react";
-import { Alert, Button, Card, CardContent, Container, Typography } from "@mui/material";
+import React, { useRef, useState } from "react";
+import { Alert, Button, Card, CardContent, Container, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import { updatePassword } from "firebase/auth";
 
 export default function Dashboard() {
 
     const navigate = useNavigate();
+
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+
     const {currentUser, logout} = useAuth();
+    const newPasswordRef = useRef<HTMLInputElement | null>(null);
+    const newPasswordConfirmRef = useRef<HTMLInputElement | null>(null);
+
+
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        setLoading(true);
+
+        try {
+            if (!newPasswordRef.current) {
+                setError("New password field is not available");
+                setLoading(false);
+                return;
+            }
+
+            if (newPasswordRef.current.value !== newPasswordConfirmRef.current?.value) {
+                setError("Passwords do not match");
+            } else {
+                setError("");
+                await updatePassword(currentUser, newPasswordRef.current.value);
+                navigate("/");
+            }
+        } catch (error) {
+            setError((error as Error).message || "An error occurred");
+        }
+
+        setLoading(false);
+    }
 
     async function handleLogout() {
         setError("")
@@ -29,16 +61,34 @@ export default function Dashboard() {
                     </Typography>
                     {error && <Alert severity="error">{error}</Alert>}
                     <Typography variant="body1" mt={4}>
-                        <strong>Email:</strong> {currentUser.email}
+                        <strong>Your email:</strong> {currentUser.email}
                     </Typography>
-                    <Button
-                        onClick={() => navigate(`/update`)}
-                        variant="contained"
-                        color="primary"
-                        sx={{marginTop: 4, width: "100%"}}
-                    >
-                        Update Profile
-                    </Button>
+                    <Typography variant="body1" mt={4}>
+                        Change password:
+                    </Typography>
+
+                    <form onSubmit={handleSubmit}>
+
+                        <TextField
+                            label="New password"
+                            type="password"
+                            inputRef={newPasswordRef}
+                            placeholder="Leave blank to keep the same"
+                            fullWidth
+                            margin="normal"
+                        />
+                        <TextField
+                            label="New password confirmation"
+                            type="password"
+                            inputRef={newPasswordConfirmRef}
+                            placeholder="Leave blank to keep the same"
+                            fullWidth
+                            margin="normal"
+                        />
+                        <Button disabled={loading} variant="contained" color="primary" fullWidth type="submit">
+                            Update
+                        </Button>
+                    </form>
                 </CardContent>
                 <Typography variant="body2" align="center" my={2}>
                     <Button variant="text" color="primary" onClick={handleLogout}>
