@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { Box, IconButton, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
 import { format } from "date-fns";
 import { AccountCircle } from "@mui/icons-material";
-import { signInWithPopup } from "firebase/auth";
-import { auth, GoogleProvider } from "../../config/firebase";
 import { useAuth } from "../../contexts/AuthContext";
 import { StyledDate } from "./styled";
+import { useNavigate } from "react-router-dom";
 
 const Header: React.FC = () => {
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-    const { logout } = useAuth();
+    const {logout} = useAuth();
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
@@ -20,40 +20,31 @@ const Header: React.FC = () => {
         setAnchorElUser(null);
     };
 
-    const loginWithGoogle = async () => {
-        handleCloseUserMenu();
-        try {
-            await signInWithPopup(auth, GoogleProvider);
-            window.location.reload();
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    async function handleLogout() {
+        setError("")
 
-    const logoutFromAccount = async () => {
-        handleCloseUserMenu();
         try {
-            await logout();
-            window.location.reload();
+            await logout()
+            navigate("/login")
         } catch (error) {
-            setError( "Failed to log out");
+            setError("Failed to log out")
         }
-    };
+    }
 
     return (
-        <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
-            <StyledDate variant="body2" sx={{ mr: 2 }}>
+        <Box sx={{width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
+            <StyledDate variant="body2" sx={{mr: 2}}>
                 Today is the {format(new Date(), `do MMMM Y`)}
             </StyledDate>
 
-            <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="Open settings">
-                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} color="inherit">
-                        <AccountCircle />
+            <Box sx={{flexGrow: 0}}>
+                <Tooltip title="User menu">
+                    <IconButton onClick={handleOpenUserMenu} sx={{p: 0}} color="inherit">
+                        <AccountCircle/>
                     </IconButton>
                 </Tooltip>
                 <Menu
-                    sx={{ mt: '45px' }}
+                    sx={{mt: '45px'}}
                     id="menu-appbar"
                     anchorEl={anchorElUser}
                     anchorOrigin={{
@@ -68,10 +59,13 @@ const Header: React.FC = () => {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                 >
-                    <MenuItem onClick={loginWithGoogle}>
-                        <Typography>Login with Google</Typography>
+                    <MenuItem onClick={() => navigate('/login')}>
+                        <Typography>Login</Typography>
                     </MenuItem>
-                    <MenuItem onClick={logoutFromAccount}>
+                    <MenuItem onClick={() => navigate('/dashboard')}>
+                        <Typography>Dashboard</Typography>
+                    </MenuItem>
+                    <MenuItem onClick={handleLogout}>
                         <Typography>Logout</Typography>
                     </MenuItem>
                 </Menu>
