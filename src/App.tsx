@@ -9,7 +9,7 @@ import LogIn from "./pages/Dashboard/LogIn";
 import ForgotPassword from "./pages/Dashboard/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
 import { AuthProvider } from "./contexts/AuthContext";
-import ProtectedRoutes from "./components/ProtectedRoutes";
+import ProtectedRoute from "./components/ProtectedRoutes";
 
 const App: React.FC = () => {
 
@@ -19,24 +19,24 @@ const App: React.FC = () => {
                 <Layout>
                     <Routes>
                         <Route path="/" element={
-                            <ProtectedRoutes>
+                            <ProtectedRoute>
                                 <Notes/>
-                            </ProtectedRoutes>
+                            </ProtectedRoute>
                         }/>
                         <Route path="/create" element={
-                            <ProtectedRoutes>
+                            <ProtectedRoute>
                                 <CreateNote/>
-                            </ProtectedRoutes>
+                            </ProtectedRoute>
                         }/>
                         <Route path="/edit/:id" element={
-                            <ProtectedRoutes>
+                            <ProtectedRoute>
                                 <EditNote/>
-                            </ProtectedRoutes>
+                            </ProtectedRoute>
                         }/>
                         <Route path="/dashboard" element={
-                            <ProtectedRoutes>
+                            <ProtectedRoute>
                                 <Dashboard/>
-                            </ProtectedRoutes>
+                            </ProtectedRoute>
                         }/>
 
                         <Route path="/signup" element={<SignUp/>}/>

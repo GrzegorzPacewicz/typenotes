@@ -2,11 +2,11 @@ import React, { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from "../../contexts/AuthContext";
 
-interface ProtectedRoutesProps {
+interface ProtectedRouteProps {
     children: ReactNode;
 }
 
-const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({ children }) => {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     const { currentUser } = useAuth();
 
     if (!currentUser) {
@@ -15,4 +15,4 @@ const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({ children }) => {
     return <>{children}</>;
 };
 
-export default ProtectedRoutes;
+export default ProtectedRoute;
