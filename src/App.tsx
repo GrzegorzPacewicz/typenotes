@@ -9,7 +9,7 @@ import LogIn from "./pages/Dashboard/LogIn";
 import ForgotPassword from "./pages/Dashboard/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
 import { AuthProvider } from "./contexts/AuthContext";
-import ProtectedRoute from "./components/ProtectedRoutes";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App: React.FC = () => {
 

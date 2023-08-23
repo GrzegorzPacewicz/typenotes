@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Alert, Button, Card, CardContent, Container, TextField, Typography } from "@mui/material";
+import { Alert, Button, Card, CardContent, Container, Link, TextField, Typography } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -84,10 +84,10 @@ const SignUp: React.FC = () => {
                         </Button>
                     </form>
                 </CardContent>
-                <Typography variant="body1" align="center">
-                    Already have an account? <NavLink to={'/login'}>Log In</NavLink>
+                <Typography variant="body1" align="center" px={1}>
+                    Already have an account? <Link> </Link><NavLink to={'/login'}>Log In</NavLink>
                 </Typography>
-                <Typography variant="body1" align="center" my={2}>
+                <Typography variant="body1" align="center" my={2} px={1}>
                     Forgot your password? <NavLink to={'/forgot-password'}>Password reset </NavLink>
                 </Typography>
             </Card>

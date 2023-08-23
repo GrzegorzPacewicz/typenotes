@@ -85,10 +85,10 @@ const LogIn: React.FC = () => {
                     </Button>
 
                 </CardContent>
-                <Typography variant="body1" align="center" mt={2}>
+                <Typography variant="body1" align="center" mt={2} px={1}>
                     Need an account? <NavLink to={'/signup'}>Sign Up</NavLink>
                 </Typography>
-                <Typography variant="body1" align="center" my={2}>
+                <Typography variant="body1" align="center" my={2} px={1}>
                     Forgot your password? <NavLink to={'/forgot-password'}>Password reset </NavLink>
                 </Typography>
             </Card>

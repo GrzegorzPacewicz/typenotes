@@ -58,10 +58,10 @@ export default function ForgotPassword() {
                     </form>
 
                 </CardContent>
-                <Typography variant="body1" align="center">
+                <Typography variant="body1" align="center" px={1}>
                     Already have an account? <NavLink to={'/login'}>Log In</NavLink>
                 </Typography>
-                <Typography variant="body1" align="center" my={2}>
+                <Typography variant="body1" align="center" my={2} px={1}>
                    Need an account? <NavLink to={'/signup'}>Sign Up</NavLink>
                 </Typography>
             </Card>
