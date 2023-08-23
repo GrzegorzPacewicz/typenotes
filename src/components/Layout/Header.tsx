@@ -26,6 +26,7 @@ const Header: React.FC = () => {
         try {
             await logout()
             navigate("/login")
+            handleCloseUserMenu()
         } catch (error) {
             setError("Failed to log out")
         }
@@ -59,10 +60,16 @@ const Header: React.FC = () => {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                 >
-                    <MenuItem onClick={() => navigate('/login')}>
+                    <MenuItem onClick={() => {
+                        navigate('/login');
+                        handleCloseUserMenu();
+                    }}>
                         <Typography>Login</Typography>
                     </MenuItem>
-                    <MenuItem onClick={() => navigate('/dashboard')}>
+                    <MenuItem  onClick={() => {
+                        navigate('/dashboard');
+                        handleCloseUserMenu();
+                    }}>
                         <Typography>Dashboard</Typography>
                     </MenuItem>
                     <MenuItem onClick={handleLogout}>
