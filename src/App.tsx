@@ -18,6 +18,8 @@ const App: React.FC = () => {
             <AuthProvider>
                 <Layout>
                     <Routes>
+
+
                         <Route path="/" element={
                             <ProtectedRoute>
                                 <Notes/>
@@ -42,8 +44,6 @@ const App: React.FC = () => {
                         <Route path="/signup" element={<SignUp/>}/>
                         <Route path="/login" element={<LogIn/>}/>
                         <Route path="/forgot-password" element={<ForgotPassword/>}/>
-
-
                         <Route path="*" element={<Notes/>}/>
 
                     </Routes>
