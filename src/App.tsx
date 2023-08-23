@@ -19,7 +19,6 @@ const App: React.FC = () => {
                 <Layout>
                     <Routes>
 
-
                         <Route path="/" element={
                             <ProtectedRoute>
                                 <Notes/>
