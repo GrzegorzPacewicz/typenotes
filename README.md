@@ -20,8 +20,13 @@ Typenotes is a simple note-taking web application that helps you organize your t
 - User-friendly and intuitive interface.
 - Mobile-responsive design for on-the-go access.
 
+## Preview
+
+![Preview](preview.gif)
+
 ## Technologies Used
 
+- **General**: project created in Vite
 - **Frontend**: TypeScript, Styled Components, Material UI, React
 - **State Management**: TanStack Query v4, React-Query
 - **Routing**: React-Router-Dom v6
@@ -34,7 +39,7 @@ Follow these steps to set up and run Typenotes on your local machine:
 
 1. Clone the repository: git clone https://github.com/GrzegorzPacewicz/typenotes
 2. Navigate to the project directory: cd typenotes
-3. Install dependencies: npm install 
+3. Install dependencies: npm install
 4. Start the development server: npm start
 5. Open your browser and navigate to `http://localhost:3000` to access Typenotes.
 
