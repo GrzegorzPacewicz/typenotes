@@ -73,7 +73,7 @@ const LogIn: React.FC = () => {
                     <Button
                         disabled={loading}
                         variant="outlined"
-                        color="primary"
+                        style={{color: "black"}}
                         fullWidth
                         type="button"
                         onClick={() => {

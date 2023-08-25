@@ -92,13 +92,22 @@ export default function Dashboard() {
                         <Button disabled={loading} variant="contained" color="primary" fullWidth type="submit">
                             Update
                         </Button>
+
                     </form>
                 </CardContent>
-                <Typography variant="body2" align="center" my={2}>
-                    <Button variant="text" color="primary" onClick={handleLogout}>
+
+                <Typography variant="body2" align="center" mx={2} mb={2}>
+                    <Button
+                        variant="contained"
+                        fullWidth
+                        style={{backgroundColor: "#424242", color: "white"}}
+                        onClick={handleLogout}
+                        sx={{mt: 4}}
+                    >
                         Log Out
                     </Button>
                 </Typography>
+
             </Card>
         </Container>
     );
