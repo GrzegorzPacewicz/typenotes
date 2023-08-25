@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Container, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -54,6 +54,11 @@ const CreateNote: React.FC = () => {
             console.error(err);
         }
     };
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
 
     return (
         <Container style={{ maxWidth: 800 }}>

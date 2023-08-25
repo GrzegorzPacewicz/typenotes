@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Alert, Button, Card, CardContent, Container, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
@@ -51,6 +51,10 @@ export default function Dashboard() {
             setError("Failed to log out")
         }
     }
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
         <Container style={{maxWidth: 500}}>

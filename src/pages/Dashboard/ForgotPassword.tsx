@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Alert, Button, Card, CardContent, Container, Link, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
@@ -34,6 +34,11 @@ export default function ForgotPassword() {
 
         setLoading(false)
     }
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
 
     return (
         <Container style={{maxWidth: 500}}>
