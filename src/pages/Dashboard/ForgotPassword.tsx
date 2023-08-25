@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Alert, Button, Card, CardContent, Container, Link, TextField, Typography } from "@mui/material";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
 export default function ForgotPassword() {
