@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { Alert, Button, Card, CardContent, Container, TextField, Typography } from "@mui/material";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Alert, Button, Card, CardContent, Container, Link, TextField, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
 const LogIn: React.FC = () => {
@@ -79,17 +79,31 @@ const LogIn: React.FC = () => {
                                 }
                             });
                         }}
-                        sx={{ mt: 4 }}
+                        sx={{mt: 4}}
                     >
                         Sign In With Google
                     </Button>
 
                 </CardContent>
                 <Typography variant="body1" align="center" mt={2} px={1}>
-                    Need an account? <NavLink to={'/signup'}>Sign Up</NavLink>
+                    Need an account?&nbsp;
+                    <Link
+                        underline="hover"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => navigate('/signup')}
+                    >
+                        Sign Up
+                    </Link>
                 </Typography>
                 <Typography variant="body1" align="center" my={2} px={1}>
-                    Forgot your password? <NavLink to={'/forgot-password'}>Password reset </NavLink>
+                    Forgot your password?&nbsp;
+                    <Link
+                        underline="hover"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => navigate('/forgot-password')}
+                    >
+                        Password reset
+                    </Link>
                 </Typography>
             </Card>
 

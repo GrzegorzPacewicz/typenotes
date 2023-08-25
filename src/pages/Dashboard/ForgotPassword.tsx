@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
-import { Alert, Button, Card, CardContent, Container, TextField, Typography } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Alert, Button, Card, CardContent, Container, Link, TextField, Typography } from "@mui/material";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
 export default function ForgotPassword() {
@@ -13,6 +13,7 @@ export default function ForgotPassword() {
     const {resetPassword} = useAuth()
     const [message, setMessage] = useState("")
 
+    const navigate = useNavigate();
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -59,10 +60,24 @@ export default function ForgotPassword() {
 
                 </CardContent>
                 <Typography variant="body1" align="center" px={1}>
-                    Already have an account? <NavLink to={'/login'}>Log In</NavLink>
+                    Already have an account?&nbsp;
+                    <Link
+                        underline="hover"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => navigate('/login')}
+                    >
+                        Log In
+                    </Link>
                 </Typography>
                 <Typography variant="body1" align="center" my={2} px={1}>
-                   Need an account? <NavLink to={'/signup'}>Sign Up</NavLink>
+                    Need an account?&nbsp;
+                    <Link
+                        underline="hover"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => navigate('/signup')}
+                    >
+                        Sign Up
+                    </Link>
                 </Typography>
             </Card>
         </Container>

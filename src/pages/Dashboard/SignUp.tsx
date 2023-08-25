@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Alert, Button, Card, CardContent, Container, Link, TextField, Typography } from "@mui/material";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
 const SignUp: React.FC = () => {
@@ -38,7 +38,6 @@ const SignUp: React.FC = () => {
 
         setLoading(false);
     }
-
 
     return (
         <Container style={{maxWidth: 500}}>
@@ -85,10 +84,24 @@ const SignUp: React.FC = () => {
                     </form>
                 </CardContent>
                 <Typography variant="body1" align="center" px={1}>
-                    Already have an account? <Link> </Link><NavLink to={'/login'}>Log In</NavLink>
+                    Already have an account?&nbsp;
+                    <Link
+                        underline="hover"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => navigate('/login')}
+                    >
+                        Log In
+                    </Link>
                 </Typography>
                 <Typography variant="body1" align="center" my={2} px={1}>
-                    Forgot your password? <NavLink to={'/forgot-password'}>Password reset </NavLink>
+                    Forgot your password?&nbsp;
+                    <Link
+                        underline="hover"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => navigate('/forgot-password')}
+                    >
+                        Password reset
+                    </Link>
                 </Typography>
             </Card>
         </Container>
