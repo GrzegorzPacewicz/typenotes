@@ -111,11 +111,9 @@ const CreateNote: React.FC = () => {
                     }}
                 />
 
-                <div>
                    <Typography>
                        Characters: {currentCharCount}/{maxCharCount}
                    </Typography>
-                </div>
 
                 <StyledFormControl>
                     <FormLabel>Note Category</FormLabel>

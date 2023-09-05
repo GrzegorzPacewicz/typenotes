@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, Button, Container, FormControlLabel, FormLabel, Radio, RadioGroup, Typography, } from '@mui/material';
+import { Box, Button, Container, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { StyledFormControl, StyledTextField } from '../../pages/CreateNote/styled';
-import { Note } from '../../types';
 import { useNoteQuery } from "../../hooks/useNoteQuery";
 import useDeleteNoteMutation from "../../hooks/useDeleteNoteMutation";
 import { useQueryClient } from "@tanstack/react-query";
 import useEditNoteMutation from "../../hooks/useEditNoteMutation";
 
+const maxCharCount = 2000;
+
 const EditNote: React.FC = () => {
+    const { id } = useParams<{ id: string }>();
 
-    const {id} = useParams<{ id: string }>();
-
-    const {note} = useNoteQuery(id!);
+    const { note } = useNoteQuery(id!);
     const queryClient = useQueryClient();
 
     const editNoteMutation = useEditNoteMutation();
@@ -30,14 +30,13 @@ const EditNote: React.FC = () => {
     }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-
-        const {name, value} = event.target;
+        const { name, value } = event.target;
 
         queryClient.setQueryData(["notesData"], (prevNotes) => {
             if (Array.isArray(prevNotes)) {
-                return prevNotes.map((n: Note) => {
+                return prevNotes.map((n) => {
                     if (n.id === note?.id) {
-                        return {...n, [name]: value};
+                        return { ...n, [name]: value };
                     }
                     return n;
                 });
@@ -47,7 +46,6 @@ const EditNote: React.FC = () => {
     };
 
     const handleEdit = (event: React.FormEvent<HTMLFormElement>) => {
-
         event.preventDefault();
         setTitleError(false);
         setDetailsError(false);
@@ -64,6 +62,11 @@ const EditNote: React.FC = () => {
         }
 
         if (!trimmedTitle || !trimmedDetails) {
+            return;
+        }
+
+        if (note?.details && note.details.length > maxCharCount) {
+            console.error('The note is too long');
             return;
         }
 
@@ -126,7 +129,13 @@ const EditNote: React.FC = () => {
                             required
                             onChange={handleChange}
                             name="details"
+                            inputProps={{
+                                maxLength: maxCharCount,
+                            }}
                         />
+                        <Typography>
+                            Characters: {note.details ? note.details.length : 0}/{maxCharCount}
+                        </Typography>
 
                         <StyledFormControl>
                             <FormLabel>Note Category</FormLabel>
@@ -140,20 +149,19 @@ const EditNote: React.FC = () => {
                                     <FormControlLabel
                                         key={option}
                                         value={option}
-                                        control={<Radio/>}
+                                        control={<Radio />}
                                         label={option.charAt(0).toUpperCase() + option.slice(1)}
                                     />
                                 ))}
                             </RadioGroup>
                         </StyledFormControl>
 
-                        <Box sx={{display: 'flex', justifyContent: 'left', gap: '1rem'}}>
+                        <Box sx={{ display: 'flex', justifyContent: 'left', gap: '1rem' }}>
                             <Button
                                 type="submit"
                                 color="primary"
                                 variant="contained"
-                                endIcon={<KeyboardArrowRightIcon/>}
-
+                                endIcon={<KeyboardArrowRightIcon />}
                             >
                                 Submit
                             </Button>
@@ -161,7 +169,7 @@ const EditNote: React.FC = () => {
                                 color="warning"
                                 variant="contained"
                                 onClick={handleDelete}
-                                endIcon={<DeleteOutlinedIcon/>}
+                                endIcon={<DeleteOutlinedIcon />}
                             >
                                 Delete
                             </Button>
