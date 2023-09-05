@@ -34,7 +34,7 @@ const NoteCard: React.FC<NoteCardProps> = ({noteProp, handleDelete}) => {
                     subheader={noteProp.category}
                 />
                 <CardContent>
-                    <Typography variant="body2" color="textSecondary">
+                    <Typography variant="body2" color="textSecondary" style={{ whiteSpace: 'pre-wrap' }}>
                         {noteProp.details}
                     </Typography>
                 </CardContent>
