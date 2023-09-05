@@ -7,15 +7,17 @@ import { auth } from "../../config/firebase";
 import { CategoryType } from '../../types';
 import useAddNoteMutation from "../../hooks/useAddNoteMutation";
 
-const CreateNote: React.FC = () => {
+const maxCharCount = 2000; // Maksymalna liczba znaków
 
+const CreateNote: React.FC = () => {
     const addNoteMutation = useAddNoteMutation();
 
     const [title, setTitle] = useState<string>('');
     const [details, setDetails] = useState<string>('');
-    const [category, setCategory] = useState<CategoryType>('todos'); // Set the default value here
+    const [category, setCategory] = useState<CategoryType>('todos');
     const [titleError, setTitleError] = useState<boolean>(false);
     const [detailsError, setDetailsError] = useState<boolean>(false);
+    const [currentCharCount, setCurrentCharCount] = useState<number>(0);
 
     const navigate = useNavigate();
 
@@ -35,6 +37,11 @@ const CreateNote: React.FC = () => {
             return;
         }
 
+        if (details.length > maxCharCount) {
+            console.error('Treść notatki jest zbyt długa.');
+            return;
+        }
+
         try {
             await addNoteMutation.mutateAsync({
                 title,
@@ -48,6 +55,7 @@ const CreateNote: React.FC = () => {
             setCategory('todos');
             setTitleError(false);
             setDetailsError(false);
+            setCurrentCharCount(0);
 
             navigate('/');
         } catch (err) {
@@ -58,7 +66,6 @@ const CreateNote: React.FC = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
-
 
     return (
         <Container style={{ maxWidth: 800 }}>
@@ -84,9 +91,12 @@ const CreateNote: React.FC = () => {
                     error={titleError}
                 />
 
-
                 <StyledTextField
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => setDetails(event.target.value)}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        const newValue = event.target.value;
+                        setDetails(newValue);
+                        setCurrentCharCount(newValue.length);
+                    }}
                     value={details}
                     variant="outlined"
                     label="Details"
@@ -96,7 +106,16 @@ const CreateNote: React.FC = () => {
                     fullWidth
                     required
                     error={detailsError}
+                    InputProps={{
+                        style: { whiteSpace: 'pre-wrap' },
+                    }}
                 />
+
+                <div>
+                   <Typography>
+                       Characters: {currentCharCount}/{maxCharCount}
+                   </Typography>
+                </div>
 
                 <StyledFormControl>
                     <FormLabel>Note Category</FormLabel>
@@ -109,14 +128,14 @@ const CreateNote: React.FC = () => {
                             <FormControlLabel
                                 key={option}
                                 value={option}
-                                control={<Radio/>}
+                                control={<Radio />}
                                 label={option.charAt(0).toUpperCase() + option.slice(1)}
                             />
                         ))}
                     </RadioGroup>
                 </StyledFormControl>
 
-                <Button type="submit" color="primary" variant="contained" endIcon={<KeyboardArrowRightIcon/>}>
+                <Button type="submit" color="primary" variant="contained" endIcon={<KeyboardArrowRightIcon />}>
                     Submit
                 </Button>
             </form>
