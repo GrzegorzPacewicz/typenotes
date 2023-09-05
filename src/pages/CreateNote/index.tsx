@@ -7,7 +7,7 @@ import { auth } from "../../config/firebase";
 import { CategoryType } from '../../types';
 import useAddNoteMutation from "../../hooks/useAddNoteMutation";
 
-const maxCharCount = 2000; // Maksymalna liczba znaków
+const maxCharCount = 2000;
 
 const CreateNote: React.FC = () => {
     const addNoteMutation = useAddNoteMutation();
@@ -38,7 +38,7 @@ const CreateNote: React.FC = () => {
         }
 
         if (details.length > maxCharCount) {
-            console.error('Treść notatki jest zbyt długa.');
+            console.error('The note is too long');
             return;
         }
 
