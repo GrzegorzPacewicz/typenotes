@@ -12,17 +12,14 @@ import useEditNoteMutation from "../../hooks/useEditNoteMutation";
 const maxCharCount = 2000;
 
 const EditNote: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
 
-    const { note } = useNoteQuery(id!);
+    const {id} = useParams<{ id: string }>();
+    const {note} = useNoteQuery(id!);
     const queryClient = useQueryClient();
-
     const editNoteMutation = useEditNoteMutation();
     const deleteNoteMutation = useDeleteNoteMutation();
-
     const [titleError, setTitleError] = useState(false);
     const [detailsError, setDetailsError] = useState(false);
-
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -30,13 +27,13 @@ const EditNote: React.FC = () => {
     }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
 
         queryClient.setQueryData(["notesData"], (prevNotes) => {
             if (Array.isArray(prevNotes)) {
                 return prevNotes.map((n) => {
                     if (n.id === note?.id) {
-                        return { ...n, [name]: value };
+                        return {...n, [name]: value};
                     }
                     return n;
                 });
@@ -46,6 +43,7 @@ const EditNote: React.FC = () => {
     };
 
     const handleEdit = (event: React.FormEvent<HTMLFormElement>) => {
+
         event.preventDefault();
         setTitleError(false);
         setDetailsError(false);
@@ -96,6 +94,7 @@ const EditNote: React.FC = () => {
         <>
             {note ? (
                 <Container>
+
                     <Typography variant="h6" component="h2" color="textSecondary" gutterBottom>
                         Edit the Note
                         {(titleError || detailsError) && (
@@ -133,6 +132,7 @@ const EditNote: React.FC = () => {
                                 maxLength: maxCharCount,
                             }}
                         />
+
                         <Typography>
                             Characters: {note.details ? note.details.length : 0}/{maxCharCount}
                         </Typography>
@@ -149,19 +149,19 @@ const EditNote: React.FC = () => {
                                     <FormControlLabel
                                         key={option}
                                         value={option}
-                                        control={<Radio />}
+                                        control={<Radio/>}
                                         label={option.charAt(0).toUpperCase() + option.slice(1)}
                                     />
                                 ))}
                             </RadioGroup>
                         </StyledFormControl>
 
-                        <Box sx={{ display: 'flex', justifyContent: 'left', gap: '1rem' }}>
+                        <Box sx={{display: 'flex', justifyContent: 'left', gap: '1rem'}}>
                             <Button
                                 type="submit"
                                 color="primary"
                                 variant="contained"
-                                endIcon={<KeyboardArrowRightIcon />}
+                                endIcon={<KeyboardArrowRightIcon/>}
                             >
                                 Submit
                             </Button>
@@ -169,11 +169,12 @@ const EditNote: React.FC = () => {
                                 color="warning"
                                 variant="contained"
                                 onClick={handleDelete}
-                                endIcon={<DeleteOutlinedIcon />}
+                                endIcon={<DeleteOutlinedIcon/>}
                             >
                                 Delete
                             </Button>
                         </Box>
+
                     </form>
                 </Container>
             ) : (
