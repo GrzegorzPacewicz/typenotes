@@ -15,10 +15,11 @@ Typenotes is a simple note-taking web application that helps you organize your t
 
 ## Features
 
-- Create, edit, and delete notes.
-- Organize notes into categories or tags.
-- User-friendly and intuitive interface.
-- Mobile-responsive design for on-the-go access.
+- Login: This feature allows users to create an account and log in to the application. It's essential for securing user data and providing a personalized experience.
+- Create, Edit, and Delete Notes: Users can create new notes, edit existing ones, and delete notes they no longer need. This is a core functionality for a note-taking application.
+- Organize Notes into Categories or Tags: This feature enables users to categorize their notes, making it easier to find and manage them. Categories or tags can help users stay organized, especially when they have a large number of notes.
+- User-friendly and Intuitive Interface: A user-friendly and intuitive interface is crucial for a positive user experience. It should be easy to navigate, and users should be able to perform actions without confusion.
+- Mobile-Responsive Design: A mobile-responsive design ensures that the application works well on various devices, including smartphones and tablets. It adapts to different screen sizes and resolutions, making it accessible on the go.
 
 ## Preview
 
